@@ -313,6 +313,7 @@ app.post("/example6post", function(request, response, next) {
 
 
 // This starts our server on port 3000
+// We must put this at the bottom of our file
 app.listen(3000, () => {
   console.log('My first app listening on port 3000!')
 });
