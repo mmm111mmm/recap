@@ -13,10 +13,10 @@ const app = express();
 
 // This creates a route - it will live at http://localhost:3000/example1
 app.get('/example1', (request, response, next) => { 
-	// request contains the the user's (i.e client's) data (e.g. the search term the user gives google.com, for example)
+  // request contains the the user's (i.e client's) data (e.g. the search term the user gives google.com, for example)
   // 
   // response will be used to talk back to the user (i.e. client)
-	//
+  //
   // we're going to ignore next, for the moment.
 
   // The below send some HTML to the client
@@ -36,13 +36,13 @@ app.get('/example1', (request, response, next) => {
 //
 // This time we will not output the HTML directly (i.e. not with response.send) 
 app.get('/example2', (request, response, next) => { 
-	// This time we don't use `response.send`. Instead we use response.sendFile()
-	// 
+  // This time we don't use `response.send`. Instead we use response.sendFile()
+  // 
   // With response.sendFile(), we specify the location of a file. Thie file lives with views/ourpage.html
   // But we must specify the 'full' path, i.e. /Users/aaron/ironhack/thisproject/views/ourpage.html
   // We use the special variable __dirname and then do + /views/ourpage.html to do that.
-	//
-	// This, then, means we need a views directory, and a ourpage.html file in that directory.
+  //
+  // This, then, means we need a views directory, and a ourpage.html file in that directory.
   response.sendFile(__dirname + "/views/ourpage.html");
 });
 
@@ -74,7 +74,7 @@ app.get('/example3', (request, response, next) => {
   // This time we use 'response.render' because we want to render a handlebars file
   // NOTE: we no longer specify the '/views' directory. This is because we did it above
   // with app.set('views', __dirname + '/views');
-	//
+  //
   // This means we need a file called 'views/ourhandlebarspage.hbs'
   // This file will be normal HTML (for the moment)
   // Note that we don't need the .hbs extension with response.render but our file on our computer needs it
@@ -88,14 +88,14 @@ app.get('/example3', (request, response, next) => {
 // This creates a route - it will live at http://localhost:3000/example4
 // In this route, we will use handlebars to pass a javascript object to our hbs file
 app.get('/example4', (request, response, next) => { 
-	// We are making a normal javascript object literal
+  // We are making a normal javascript object literal
   // It has two field names, name and drink.
-	var ourobject = {
-		name: "Aaron",
-		drink: "whiskey"
+  var ourobject = {
+    name: "Aaron",
+    drink: "whiskey"
   }
-	// Now we are passing this object to our new hbs file
-	// Note: This means we must create a views/ourhandlebarspage_withdata.hbs file
+  // Now we are passing this object to our new hbs file
+  // Note: This means we must create a views/ourhandlebarspage_withdata.hbs file
   response.render('ourhandlebarspage_withdata', ourobject);
 });
 // 
@@ -152,9 +152,9 @@ app.get('/example4', (request, response, next) => {
 //
 /*
 app.get('/example4', (request, response, next) => { 
-	var ourobject = {
-		name: "Aaron",
-		drink: "whiskey"
+  var ourobject = {
+    name: "Aaron",
+    drink: "whiskey"
   }
   response.render('ourhandlebarspage_withdata', ourobject);
 });
@@ -190,8 +190,8 @@ app.get('/example4', (request, response, next) => {
 // This creates a route - it will live at http://localhost:3000/example5
 // We will get query parameters in this route
 app.get('/example5', (request, response, next) => { 
-	// Remember the 'request' object contains the information the user wants to give us
-	//
+  // Remember the 'request' object contains the information the user wants to give us
+  //
   // And remember we want to get that information from 'query' parameters
   //
   // So we use request.query and then we specify name of the query parameter.
@@ -199,12 +199,12 @@ app.get('/example5', (request, response, next) => {
   // And if we look above, we passed two parameter: one called firstparameter and another called secondparameter
   var thefood = request.query.food
   var thedrink = request.query.drink
-	// Let's console log these to make sure we have them correctly.
+  // Let's console log these to make sure we have them correctly.
   // We will need to look in the terminal to see these
-	console.log("the query parameter are: ", thefood, " and ", thedrink)
-	// Remember we can only test this when the URL has the query parameters, i.e.
+  console.log("the query parameter are: ", thefood, " and ", thedrink)
+  // Remember we can only test this when the URL has the query parameters, i.e.
   // http://localhost:3000/example5?food=greek&drink=ouzo
-	//
+  //
   // With these new query parameters, we'd normally do something with them.
   // For example, we might render a difference page, or send different data
   // to the handlebars page. But for now we'll leave them.
@@ -237,13 +237,13 @@ app.get('/example5', (request, response, next) => {
 //
 // When I say HTML form I mean this:
 /*
-	<form action="/example6post" method="post">
-		<input name="food">
-    <br>
-		<input name="drink">
-    <br>
-		<button type="submit">press me<button>
-  <form>
+<form action="/example6post" method="post">
+  <input name="food">
+  <br>
+  <input name="drink">
+  <br>
+  <button type="submit">press me<button>
+<form>
 */
 //
 // the 'action' attribute on the form tag points to our route name (which we haven't created yet).
@@ -294,7 +294,7 @@ app.post("/example6post", function(request, response, next) {
  console.log(information)
  // For example, using the filled in HTML form, it could be like this
  /*
-	* { food: 'mozerella', drink: 'whiskey' }
+ * { food: 'mozerella', drink: 'whiskey' }
  */
  // With this new post body parameters, we'd normally do something with them.
  // For example, we might save a new user. Then render a page that says
