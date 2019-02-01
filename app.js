@@ -187,7 +187,7 @@ app.get('/example4', (request, response, next) => {
 //
 // Let's now get these query parameters in our route.
 //
-// This creates a route - it will live at http://localhost:3000/example5
+// This creates a route - it will live at http://localhost:3000/example5?food=greek&drink=ouzo
 // We will get query parameters in this route
 app.get('/example5', (request, response, next) => { 
   // Remember the 'request' object contains the information the user wants to give us
@@ -213,8 +213,41 @@ app.get('/example5', (request, response, next) => {
   response.render('ourhandlebarspage' );
 });
 
+// There's another way to get data from a GET request
+// It's called using URL path segments or URL parameters
+//
+// You will call the URL like this:
+// http://localhost:3000/example5urlsegments/greek/ouzo
+//
+// If we were using URL query parameters it would be: ...?food=greek&drink=ouzo
+//
+// URL segments simple give prettier URLs. Compare
+// http://localhost:3000/example5urlsegments/greek/ouzo
+// to
+// http://localhost:3000/example5urlqueryexample?food=greek&drink=ouzo
+// 
+// They give you the same functionality, but the URLs look different.
+//
+// This creates a route - it will live at http://localhost:3000/example5urlsegments/greek/ouzo
+app.get('/example5urlsegments/:food/:drink', (req, res, next) => {
+  // Note the `:` in the route.
+  // This only indicates to express this is a URL segment.
+  // You do NOT put this in the web browser address bar.
+  var thefood = request.params.food
+  var thedrink = request.params.drink
+  // Let's console log these to make sure we have them correctly.
+  // We will need to look in the terminal to see these
+  console.log("the url path segments are: ", thefood, " and ", thedrink)
+	
+  // With these new parameters, we'd normally do something with them.
+  // For example, we might render a difference page, or send different data
+  // to the handlebars page. But for now we'll leave them.
+  //
+  // All we're doing in this lesson is showing how to get query parameters.
+  response.render('ourhandlebarspage' );	
+})
 
-// TODO: http://materials.ironhack.com/s/HJyNA2MT4EQ#route-params
+
 
 
 
