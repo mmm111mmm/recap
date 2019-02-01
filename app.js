@@ -1,5 +1,5 @@
 // This file gives you examples for five lessons that relate to Node.js, express and handlebars.
-// We do not deal with mongo or mongoose in this.
+// We do not deal with mongo or mongoose in this file.
 
 // This recaps the lessons:
 
@@ -23,8 +23,8 @@ const express = require('express');
 // We now initalise express in the variable 'app'
 const app = express();
 
-// This creates a route - it will live at http://localhost:3000/example1
-app.get('/example1', function (request, response, next) { 
+// This creates a route - it will live at http://localhost:3000/send_a_string
+app.get('/send_a_string', function (request, response, next) { 
   // request contains the the user's (i.e client's) data (e.g. the search term the user gives google.com, for example)
   // 
   // response will be used to talk back to the user (i.e. client)
@@ -44,10 +44,10 @@ app.get('/example1', function (request, response, next) {
 });
 
 
-// This creates another route - it will live at http://localhost:3000/example2
+// This creates another route - it will live at http://localhost:3000/send_a_file
 //
 // This time we will not output the HTML directly (i.e. not with response.send) 
-app.get('/example2', function (request, response, next) { 
+app.get('/send_a_file', function (request, response, next) { 
   // This time we don't use `response.send`. Instead we use response.sendFile()
   // 
   // With response.sendFile(), we specify the location of a file. Thie file lives with views/ourpage.html
@@ -70,7 +70,7 @@ app.get('/example2', function (request, response, next) {
 //
 // But we cannot pass any javascript objects to /views/ourpage.html
 //
-// We cannot, however, use something called handlebars to do so.
+// We can, however, use something called handlebars to do so.
 //
 // So must ensure you do "npm install hbs" in this directory (hbs means "handlebars")
 // 
@@ -80,9 +80,9 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'hbs');
 // 
 // 
-// This creates a route - it will live at http://localhost:3000/example3
+// This creates a route - it will live at http://localhost:3000/handlebars
 // In this route, we will use handlebars
-app.get('/example3', function(request, response, next) { 
+app.get('/handlebars', function(request, response, next) { 
   // This time we use 'response.render' because we want to render a handlebars file
   // NOTE: we no longer specify the '/views' directory. This is because we did it above
   // with app.set('views', __dirname + '/views');
@@ -97,9 +97,9 @@ app.get('/example3', function(request, response, next) {
 // We said we use handle bars to give javascript objects to handlebars.
 // We're not doing that now, but we will with our next route.
 
-// This creates a route - it will live at http://localhost:3000/example4
+// This creates a route - it will live at http://localhost:3000/handlebars_with_data
 // In this route, we will use handlebars to pass a javascript object to our hbs file
-app.get('/example4', function(request, response, next) { 
+app.get('/handlebars_with_data', function(request, response, next) { 
   // We are making a normal javascript object literal
   // It has two field names, name and drink.
   var ourobject = {
