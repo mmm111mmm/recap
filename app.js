@@ -389,7 +389,7 @@ app.post("/a_post_route", function(request, response, next) {
 // For example if you type in http://localhost:3000/if_firefox (which we'll define below)
 // The first thing that would happen is our middlware function above would be called.
 // Then in our middleware function, we'd call `next()`.
-// And then we'd go to http://localhost:3000/if_firefox 
+// And then we'd go to the if_firefox route.
 //
 // Let's make some real middleware.
 // Our middleware will look at the user's web browser.
