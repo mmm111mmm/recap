@@ -172,7 +172,7 @@ app.get('/example4', (request, response, next) => {
 });
 */
 //
-// In this example, the content of body will be whatever relates to reponse.render('ourhandlebarspage_withdata')
+// In this example, the content of body will be whatever relates to response.render('ourhandlebarspage_withdata')
 // i.e. the content of 'ourhandlebarspage_withdata.hbs'.
 
 
@@ -414,7 +414,7 @@ app.use(function(request, response, next) {
 
 // This creates a route - it will live at http://localhost:3000/if_firefox
 app.get("/if_firefox", function(request, response, next) {
-  // We're not using reponse.render() in this example.
+  // We're not using response.render() in this example.
   // That's because this is simple example, and all I want to do
   // is print text to the browser.
   // And I want to access the property we defined in our middleware
