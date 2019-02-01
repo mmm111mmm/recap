@@ -1,7 +1,7 @@
 // This file gives you examples for five lessons that relate to Node.js, express and handlebars.
 // We do not deal with mongo or mongoose in this.
 
-// The lessons this recaps is:
+// This recaps the lessons:
 
 // 0. Intro to express: https://trello.com/c/86ZKDbJU/84-express-introduction 
 // 1. Express and handlebars (Express Dynamic views): https://trello.com/c/MYCj8lFg/88-express-dynamic-views
@@ -122,7 +122,7 @@ app.get('/example4', function(request, response, next) {
 //
 // In this file I use the strange syntax {{ }}
 // Inside those, I refer the the fields, name and drink, that I
-// massed to response.render.
+// passed to response.render.
 //
 // You can do many things with this syntax, such as iterating over arrays
 // It's difficult to remember all of this. So use a reference, such as 
@@ -172,7 +172,7 @@ app.get('/example4', (request, response, next) => {
 });
 */
 //
-// In this exampel, the content of body will be what relates to reponse.render('ourhandlebarspage_withdata')
+// In this example, the content of body will be whatever relates to reponse.render('ourhandlebarspage_withdata')
 // i.e. the content of 'ourhandlebarspage_withdata.hbs'.
 
 
@@ -233,7 +233,7 @@ app.get('/example5', function(request, response, next) {
 //
 // If we were using URL query parameters it would be: ...?food=greek&drink=ouzo
 //
-// URL segments simple give prettier URLs. Compare
+// URL segments simply give prettier URLs. Compare
 // http://localhost:3000/example5urlsegments/greek/ouzo
 // to
 // http://localhost:3000/example5urlqueryexample?food=greek&drink=ouzo
@@ -255,7 +255,7 @@ app.get('/example5urlsegments/:food/:drink', function(request, response, next) {
   console.log("the url path segments are: ", thefood, " and ", thedrink)
 	
   // With these new parameters, we'd normally do something with them.
-  // For example, we might render a difference page, or send different data
+  // For example, we might render a different page, or send different data
   // to the handlebars page. But for now we'll leave them.
   //
   // All we're doing in this lesson is showing how to get query parameters.
@@ -305,7 +305,7 @@ app.get('/example5urlsegments/:food/:drink', function(request, response, next) {
 // 
 // This creates a route - it will live at http://localhost:3000/example6
 app.get("/example6", function(request, response, next) {
-	response.render("example6form")
+  response.render("example6form")
 })
 //
 // Once we go to this route using http://localhost:3000/example6
@@ -325,7 +325,7 @@ app.get("/example6", function(request, response, next) {
 //
 // After install the npm module, we need to require the module
 const bodyParser = require('body-parser');
-// And we need to sell express to use that.
+// And we need to tell express to use that.
 // Please ignore the 'urlencoded' part now, but do type it in. 
 // We will explain it later on.
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -365,7 +365,7 @@ app.post("/example6post", function(request, response, next) {
 //
 //app.use(function(request, response, next) {
 //  console.log("I am called before every request")
-//	next();
+//  next();
 //})
 //
 // Let's look at the `next` variable.
@@ -389,19 +389,19 @@ app.use(function(request, response, next) {
   // These are little bits of information like information about the web browser you are using
   // To find out what browser the user is using we can look at the "user-agent"
   var userAgent = request.headers["user-agent"] 
-	// console.log(userAgent) -- uncomment this if you want to see the entire "user-agent"
+  // console.log(userAgent) -- uncomment this if you want to see the entire "user-agent"
   // We are now going to look if your user-agent has the text "Firefox" in it.
-	var isFirefox = userAgent.includes("Firefox")
+  var isFirefox = userAgent.includes("Firefox")
   if(isFirefox) {
-		// We're adding a new property to our request object
+    // We're adding a new property to our request object
     // That is, usingFirefox didn't exist, but now it does.
     // And means the request object in the route will have this property
-		request.usingFirefox = true
-	} else {
-		request.usingFirefox = false
-	}
+    request.usingFirefox = true
+  } else {
+    request.usingFirefox = false
+  }
   // Now let's continue with the normal route (whatever the user wanted to go to originally)
-	next(); 
+  next(); 
 })
 
 // Now we've registered our middleware, all the routes that are defined AFTER we do `app.use`
@@ -414,11 +414,11 @@ app.use(function(request, response, next) {
 
 // This creates a route - it will live at http://localhost:3000/if_firefox
 app.get("/if_firefox", function(request, response, next) {
-	// We're not using reponse.render() in this example.
+  // We're not using reponse.render() in this example.
   // That's because this is simple example, and all I want to do
   // is print text to the browser.
   // And I want to access the property we defined in our middleware
-	response.send("Are you using firefox? " + request.usingFirefox)
+  response.send("Are you using firefox? " + request.usingFirefox)
 })
 
 // Here's something small and extra
@@ -436,9 +436,9 @@ app.get("/if_firefox", function(request, response, next) {
 
 // This creates a route - it will live at http://localhost:3000/take_me_to_wikipedia
 app.get("/take_me_to_wikipedia", function(request, response, next) {
-	// Obviously this is a silly example.
+  // Obviously this is a silly example.
   // Normally, you'd redirect a user if you detect they're not logged in, for example.
-	response.redirect(307, "https://wikipedia.org")
+  response.redirect(307, "https://wikipedia.org")
 })
 
 
