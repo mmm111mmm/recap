@@ -81,3 +81,29 @@ function addDataToDatabase(collection) {
     }
   })
 }
+
+// #########
+// #
+// # Connecting to Mongo without Mongoose with promises
+// #
+// #########
+
+MongoClient.connect(url)
+.then(function(mongo) {
+  console.log("Hooray we've connected to the database")
+  return mongo.db("my_recap_database").collection("my_recap_collection")
+})
+.then(function(collection) {
+  console.log("Hooray we've connected to the collection")
+  var country_data = {
+    "country" : "scotland",
+    "population" : "3000000"	
+  }
+  return collection.insertOne(country_data)
+})
+.then(function(goodResult) {
+   console.log("We've added something to the database!")
+})
+.catch(function(error) {
+   console.log("Some kind of monogo error", error)
+})
