@@ -22,13 +22,13 @@ app.get('/example1', (request, response, next) => {
   // The below send some HTML to the client
   // Note the function is called 'send' and its argument is a string
   response.send(`
-		<html>
-			<head></head>
-			<body>
-				<h1>Welcome Ironhacker. :)</h1>
-			</body>
-		</html>
-	`);
+    <html>
+      <head></head>
+      <body>
+        <h1>Welcome Ironhacker. :)</h1>
+      </body>
+    </html>
+  `);
 });
 
 
@@ -133,13 +133,13 @@ app.get('/example4', (request, response, next) => {
 // Here's an example of my layout.hbs file
 /*
 <html>
-	<head>
-	</head>
-	<body>
-		{{{ body }}}
-		<hr>
-		Copyright 2019
-	</body>
+  <head>
+  </head>
+  <body>
+    {{{ body }}}
+    <hr>
+    Copyright 2019
+  </body>
 </html>
 */
 //
