@@ -160,10 +160,10 @@ app.get('/handlebars_with_data', function(request, response, next) {
 //
 // The content of {{{ body }} will be the page we specified in our route.
 //
-// Let's look at our previous route, example4.
+// Let's look at our previous route, handlebars_with_data.
 //
 /*
-app.get('/example4', (request, response, next) => { 
+app.get('/handlebars_with_data', (request, response, next) => { 
   var ourobject = {
     name: "Aaron",
     drink: "whiskey"
@@ -190,7 +190,7 @@ app.get('/example4', (request, response, next) => {
 //
 // We can do this with things called 'query parameters'. 
 //
-// The user sends us query parameters like this: http://localhost:3000/example5?food=greek&drink=ouzo
+// The user sends us query parameters like this: http://localhost:3000/a_get_route?food=greek&drink=ouzo
 //
 // The client sends the query parameters by putting the `?` symbol after the website url.
 // 
@@ -199,9 +199,9 @@ app.get('/example4', (request, response, next) => {
 //
 // Let's now get these query parameters in our route.
 //
-// This creates a route - it will live at http://localhost:3000/example5?food=greek&drink=ouzo
+// This creates a route - it will live at http://localhost:3000/a_get_route?food=greek&drink=ouzo
 // We will get query parameters in this route
-app.get('/example5', function(request, response, next) { 
+app.get('/a_get_route', function(request, response, next) { 
   // Remember the 'request' object contains the information the user wants to give us
   //
   // And remember we want to get that information from 'query' parameters
@@ -215,33 +215,38 @@ app.get('/example5', function(request, response, next) {
   // We will need to look in the terminal to see these
   console.log("the query parameter are: ", thefood, " and ", thedrink)
   // Remember we can only test this when the URL has the query parameters, i.e.
-  // http://localhost:3000/example5?food=greek&drink=ouzo
+  // http://localhost:3000/a_get_route?food=greek&drink=ouzo
   //
   // With these new query parameters, we'd normally do something with them.
   // For example, we might render a difference page, or send different data
-  // to the handlebars page. But for now we'll leave them.
-  //
-  // All we're doing in this lesson is showing how to get query parameters.
-  response.render('ourhandlebarspage' );
+  // to the handlebars page. But for now we'll just send them to our handlebars file.
+	let our_data = {
+		food: thefood,
+		drink: thedrink
+	}
+	console.log(our_data)
+  // As a simple example, in our views/our_get_route_with_data.hbs file 
+  // we simply print our the information in our_data.	
+  response.render('our_get_route_with_data', our_data);
 });
 
 // There's another way to get data from a GET request
 // It's called using URL path segments or URL parameters
 //
 // You will call the URL like this:
-// http://localhost:3000/example5urlsegments/greek/ouzo
+// http://localhost:3000/a_get_route_with_url_segments/greek/ouzo
 //
 // If we were using URL query parameters it would be: ...?food=greek&drink=ouzo
 //
 // URL segments simply give prettier URLs. Compare
-// http://localhost:3000/example5urlsegments/greek/ouzo
+// http://localhost:3000/a_get_route_with_url_segments/greek/ouzo
 // to
-// http://localhost:3000/example5urlqueryexample?food=greek&drink=ouzo
+// http://localhost:3000/with_query_params?food=greek&drink=ouzo
 // 
 // They give you the same functionality, but the URLs look different.
 //
-// This creates a route - it will live at http://localhost:3000/example5urlsegments/greek/ouzo
-app.get('/example5urlsegments/:food/:drink', function(request, response, next) {
+// This creates a route - it will live at http://localhost:3000/a_get_route_with_url_segments/greek/ouzo
+app.get('/a_get_route_with_url_segments/:food/:drink', function(request, response, next) {
   // Note the `:` in the route.
   // This only indicates to express this is a URL segment.
   // You do NOT put this in the web browser address bar.
@@ -255,11 +260,15 @@ app.get('/example5urlsegments/:food/:drink', function(request, response, next) {
   console.log("the url path segments are: ", thefood, " and ", thedrink)
 	
   // With these new parameters, we'd normally do something with them.
-  // For example, we might render a different page, or send different data
-  // to the handlebars page. But for now we'll leave them.
-  //
-  // All we're doing in this lesson is showing how to get query parameters.
-  response.render('ourhandlebarspage' );	
+  // For example, we might render a difference page, or send different data
+  // to the handlebars page. But for now we'll just send them to our handlebars file.
+	let our_data = {
+		food: thefood,
+		drink: thedrink
+	}
+  // As a simple example, in our views/our_get_route_with_data.hbs file 
+  // we simply print our the information in our_data.	
+  response.render('our_get_route_with_data', our_data);
 })
 
 
@@ -280,12 +289,12 @@ app.get('/example5urlsegments/:food/:drink', function(request, response, next) {
 // to save things, like sending information about a new user. 
 //
 // There are two main things you need to know about POST requests:
-// * You do NOT use query parameter  (i.e. you can't do http://localhost:3000/example5?food=greek&drink=ouzo) to pass information to a POST route
+// * You do NOT use query parameter  (i.e. you can't do http://localhost:3000/a_get_route?food=greek&drink=ouzo) to pass information to a POST route
 // * You submit information to a POST route using a HTML form.
 //
 // When I say HTML form I mean this:
 /*
-<form action="/example6post" method="post">
+<form action="/a_post_route" method="post">
   <input name="food">
   <br>
   <input name="drink">
@@ -295,26 +304,27 @@ app.get('/example5urlsegments/:food/:drink', function(request, response, next) {
 */
 //
 // the 'action' attribute on the form tag points to our route name (which we haven't created yet).
+// the 'method' attribute on the form tag says we're going to me a POST request
 // the 'name' attribute on the input tags define the name of the parameter we will send to our post route
 // the button (with type="submit") will send our data to the post route (which we haven't created yet)
 //
-// We are now going to save this file as 'example6form.hbs' in our views/ directory.
+// We are now going to save this file as 'a_html_form.hbs' in our views/ directory.
 //
 // Although we are going to get a POST request eventually, 
 // we are going to show our HTML form using a GET route.
 // 
-// This creates a route - it will live at http://localhost:3000/example6
-app.get("/example6", function(request, response, next) {
-  response.render("example6form")
+// This creates a route - it will live at http://localhost:3000/show_the_form
+app.get("/show_the_form", function(request, response, next) {
+  response.render("a_html_form")
 })
 //
-// Once we go to this route using http://localhost:3000/example6
+// Once we go to this route using http://localhost:3000/show_the_form
 // it will show us our HTML form.
 //
 // Now we can fill in our HTML form on that page.
 // 
-// Remember or HTML form is point at /example6post (using <form action="/example6post">) 
-// So once we press the button on our form, we will go to the route /example6post
+// Remember or HTML form is point at /a_post_route (using <form action="/a_post_route">) 
+// So once we press the button on our form, we will go to the route /a_post_route
 //
 // So let's create that route.
 //
@@ -333,23 +343,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Now let's finally create our POST route
 //
 // Note that instead of saying `app.get`, we now say `app.post`. This makes it a post route
-// This creates a route - it will live at http://localhost:3000/example6post
+// This creates a route - it will live at http://localhost:3000/a_post_route
 // And our HTML form will take us there.
-app.post("/example6post", function(request, response, next) {
- // Now in our route (because we included the bodyParser) we can simply look at the information
- // that the HTML form gave us using
- var information = request.body
- console.log(information)
- // For example, using the filled in HTML form, it could be like this
- /*
- * { food: 'mozerella', drink: 'whiskey' }
- */
- // With this new post body parameters, we'd normally do something with them.
- // For example, we might save a new user. Then render a page that says
- // user save.
- //
- // But in this lesson, all we're doing in this lesson is showing how to use body post parameters.
- response.render('ourhandlebarspage');
+app.post("/a_post_route", function(request, response, next) {
+  // Now in our route (because we included the bodyParser) we can simply look at the information
+  // that the HTML form gave us using
+  var information = request.body
+  console.log(information)
+  // For example, using the filled in HTML form, it could be like this
+  //  
+  // { food: 'mozerella', drink: 'whiskey' }
+  // With this new POST data, we'd normally do something with it.
+  // For example, we might render a difference page, or send different data
+  // to the handlebars page. But for now we'll just send them to our handlebars file.
+  let our_data = {
+    food: information.food,
+    drink: information.drink
+   }
+  // As a simple example, in our views/our_get_route_with_data.hbs file 
+  // we simply print our the information in our_data.	
+  response.render('our_post_route_with_data', our_data);
 })
 
 // Let's talk about something different.
