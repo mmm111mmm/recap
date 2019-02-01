@@ -56,20 +56,8 @@ function useTheMongoDatabse(mongo) {
       console.log("Error opening the database and collection", error)
     } else {
       // Otherwise, let's use the 'collection' object to insert a random javascript object (JSON)
-      // into our database.
-      var country_data = {
-        "country" : "scotland",
-        "population" : "3000000"	
-      }
-      collection.insertOne(country_data, function(error, result) {
-        // This function will be run when we've inserted something.
-        // Error will be something if there's been an error
-        if(error) {
-          console.log("Error inserting something into my_recap_collection", error)
-        } else {
-          console.log("Successfully added something into my_recap_collection!")
-        }
-      })
+      // into our database. We'll define another function for this.
+      addDataToDatabase(collection)
     }
   }
   // Now we've defined our callback function, let's pass 
@@ -77,3 +65,19 @@ function useTheMongoDatabse(mongo) {
   mongo.db("my_recap_database").collection("my_recap_collection", onConnected)
 }
 
+function addDataToDatabase(collection) {
+  // We've passed in the collection we got from connecting to the database.
+  var country_data = {
+    "country" : "scotland",
+    "population" : "3000000"	
+  }
+  collection.insertOne(country_data, function(error, result) {
+    // This function will be run when we've inserted something.
+    // Error will be something if there's been an error
+    if(error) {
+      console.log("Error inserting something into my_recap_collection", error)
+    } else {
+      console.log("Successfully added something into my_recap_collection!")
+    }
+  })
+}
