@@ -49,29 +49,29 @@ function useTheMongoDatabse(mongo) {
   //
   // In this function, we will add something to our database. Let's create that now.
   //
-	var onConnected = function(error, collection) {
-		// Mongo will call this function. 
-		if(error) {
-    	// If there's been an error, the 'error' object will have something in it
-		  console.log("Error opening the database and collection", error)
-		} else {
-	    // Otherwise, let's use the 'collection' object to insert a random javascript object (JSON)
+  var onConnected = function(error, collection) {
+    // Mongo will call this function. 
+    if(error) {
+      // If there's been an error, the 'error' object will have something in it
+      console.log("Error opening the database and collection", error)
+    } else {
+      // Otherwise, let's use the 'collection' object to insert a random javascript object (JSON)
       // into our database.
-			var country_data = {
-				"country" : "scotland",	
-				"population" : "3000000"	
+      var country_data = {
+        "country" : "scotland",
+        "population" : "3000000"	
       }
-			collection.insertOne(country_data, function(error, result) {
-				// This function will be run when we've inserted something.
-				// Error will be something if there's been an error
-				if(error) {
-		  		console.log("Error inserting something into my_recap_collection", error)
-				} else {
-					console.log("Successfully added something into my_recap_collection!")
-				}
-			})
-		}
-	}
+      collection.insertOne(country_data, function(error, result) {
+        // This function will be run when we've inserted something.
+        // Error will be something if there's been an error
+        if(error) {
+          console.log("Error inserting something into my_recap_collection", error)
+        } else {
+          console.log("Successfully added something into my_recap_collection!")
+        }
+      })
+    }
+  }
   // Now we've defined our callback function, let's pass 
   // it to Mongo, pointing at our database and our collection
   mongo.db("my_recap_database").collection("my_recap_collection", onConnected)
