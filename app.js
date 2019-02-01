@@ -1,5 +1,17 @@
+// This file gives you examples for five lessons that relate to Node.js, express and handlebars.
+// We do not deal with mongo or mongoose in this.
+
+// The lessons this recaps is:
+
+// 0. Intro to express: https://trello.com/c/86ZKDbJU/84-express-introduction 
+// 1. Express and handlebars (Express Dynamic views): https://trello.com/c/MYCj8lFg/88-express-dynamic-views
+// 2. Handlebars and layouts (Express | Layouts): https://trello.com/c/YvyNe5JY/86-express-layouts-but-no-partials-%F0%9F%87%A9%F0%9F%87%AA
+// 3. GET methods: https://trello.com/c/VUcIMbBn/93-express-get-methods-route-params-query-string
+// 4. POST methods: https://trello.com/c/YtdkOi8T/99-express-post-method-request-body
+// 5. Plus now to redirect to another webpage or website
+
 // You will run this file by typing: node app.js
-// You needs npm modules so tyoe 'npm install express hbs body-parser' -- but we talk about this in the comments.
+// You needs npm modules so type 'npm install express hbs body-parser' -- but we talk about this in the comments.
 
 // #########
 // # Everything in this section relates to the intro to node lesson
@@ -12,7 +24,7 @@ const express = require('express');
 const app = express();
 
 // This creates a route - it will live at http://localhost:3000/example1
-app.get('/example1', (request, response, next) => { 
+app.get('/example1', function (request, response, next) { 
   // request contains the the user's (i.e client's) data (e.g. the search term the user gives google.com, for example)
   // 
   // response will be used to talk back to the user (i.e. client)
@@ -35,7 +47,7 @@ app.get('/example1', (request, response, next) => {
 // This creates another route - it will live at http://localhost:3000/example2
 //
 // This time we will not output the HTML directly (i.e. not with response.send) 
-app.get('/example2', (request, response, next) => { 
+app.get('/example2', function (request, response, next) { 
   // This time we don't use `response.send`. Instead we use response.sendFile()
   // 
   // With response.sendFile(), we specify the location of a file. Thie file lives with views/ourpage.html
@@ -70,7 +82,7 @@ app.set('view engine', 'hbs');
 // 
 // This creates a route - it will live at http://localhost:3000/example3
 // In this route, we will use handlebars
-app.get('/example3', (request, response, next) => { 
+app.get('/example3', function(request, response, next) { 
   // This time we use 'response.render' because we want to render a handlebars file
   // NOTE: we no longer specify the '/views' directory. This is because we did it above
   // with app.set('views', __dirname + '/views');
@@ -87,7 +99,7 @@ app.get('/example3', (request, response, next) => {
 
 // This creates a route - it will live at http://localhost:3000/example4
 // In this route, we will use handlebars to pass a javascript object to our hbs file
-app.get('/example4', (request, response, next) => { 
+app.get('/example4', function(request, response, next) { 
   // We are making a normal javascript object literal
   // It has two field names, name and drink.
   var ourobject = {
@@ -189,7 +201,7 @@ app.get('/example4', (request, response, next) => {
 //
 // This creates a route - it will live at http://localhost:3000/example5?food=greek&drink=ouzo
 // We will get query parameters in this route
-app.get('/example5', (request, response, next) => { 
+app.get('/example5', function(request, response, next) { 
   // Remember the 'request' object contains the information the user wants to give us
   //
   // And remember we want to get that information from 'query' parameters
@@ -229,7 +241,7 @@ app.get('/example5', (request, response, next) => {
 // They give you the same functionality, but the URLs look different.
 //
 // This creates a route - it will live at http://localhost:3000/example5urlsegments/greek/ouzo
-app.get('/example5urlsegments/:food/:drink', (request, response, next) => {
+app.get('/example5urlsegments/:food/:drink', function(request, response, next) {
   // Note the `:` in the route.
   // This only indicates to express this is a URL segment.
   // You do NOT put this in the web browser address bar.
@@ -340,11 +352,94 @@ app.post("/example6post", function(request, response, next) {
  response.render('ourhandlebarspage');
 })
 
-// TODO: Talk about middleware
+// Let's talk about something different.
+// Let's talk about express middleware.
+//
+// What is it?  It's something that lives in the middle.
+//
+// The middleware is a function that is called before our routes.
+// Middleware does things like: Check you are logged in, check for authorised users, 
+// make a log of all the user requests into your app, etc.
+//
+// Let's look at an example:
+//
+//app.use(function(request, response, next) {
+//  console.log("I am called before every request")
+//	next();
+//})
+//
+// Let's look at the `next` variable.
+// The `next` variable is a function.
+// And so we can call `next()`
+// And this means now go the route the user originally requested.
+//
+// For example if you type in http://localhost:3000/if_firefox (which we'll define below)
+// The first thing that would happen is our middlware function above would be called.
+// Then in our middleware function, we'd call `next()`.
+// And then we'd go to http://localhost:3000/if_firefox 
+//
+// Let's make some real middleware.
+// Our middleware will look at the user's web browser.
+// If they're using firefox we'll add a property to the request object
+// Then the normal route that the user called will have the property on the request object
+// NOTE: This is obviously a stupid example.
+// Normally you'd do something like logging, user authorisationg, redirecting to another webpage, etc
+app.use(function(request, response, next) {
+  // Every request has headers
+  // These are little bits of information like information about the web browser you are using
+  // To find out what browser the user is using we can look at the "user-agent"
+  var userAgent = request.headers["user-agent"] 
+	// console.log(userAgent) -- uncomment this if you want to see the entire "user-agent"
+  // We are now going to look if your user-agent has the text "Firefox" in it.
+	var isFirefox = userAgent.includes("Firefox")
+  if(isFirefox) {
+		// We're adding a new property to our request object
+    // That is, usingFirefox didn't exist, but now it does.
+    // And means the request object in the route will have this property
+		request.usingFirefox = true
+	} else {
+		request.usingFirefox = false
+	}
+  // Now let's continue with the normal route (whatever the user wanted to go to originally)
+	next(); 
+})
 
+// Now we've registered our middleware, all the routes that are defined AFTER we do `app.use`
+// will use this middleware.
+//
+// If you want ALL your routes to use your middleware, put the `app.use` call at the top of your file.
+//
+// So let's now define a new GET route that uses this middleware.
+//
 
+// This creates a route - it will live at http://localhost:3000/if_firefox
+app.get("/if_firefox", function(request, response, next) {
+	// We're not using reponse.render() in this example.
+  // That's because this is simple example, and all I want to do
+  // is print text to the browser.
+  // And I want to access the property we defined in our middleware
+	response.send("Are you using firefox? " + request.usingFirefox)
+})
 
+// Here's something small and extra
+//
+// Sometimes we want to redirect the user to another webpage
+// 
+// For example, perhaps we detect they're not logged in 
+// (Something we'll learn later)
+// Then want to redirect them to another website if they're not logged in
+//
+// This is easy to do. We just say response.redirect(307, "https://wikipedia.org")
+// The page we want to redirect to is the second parameter.
+// But the first parameter is a HTTP status code. We will learn these later.
+// For now, just know that 307 means redirect.
 
+// This creates a route - it will live at http://localhost:3000/take_me_to_wikipedia
+app.get("/take_me_to_wikipedia", function(request, response, next) {
+	// Obviously this is a silly example.
+  // Normally, you'd redirect a user if you detect they're not logged in, for example.
+	response.redirect(307, "https://wikipedia.org")
+})
 
 
 
