@@ -229,10 +229,13 @@ app.get('/example5', (request, response, next) => {
 // They give you the same functionality, but the URLs look different.
 //
 // This creates a route - it will live at http://localhost:3000/example5urlsegments/greek/ouzo
-app.get('/example5urlsegments/:food/:drink', (req, res, next) => {
+app.get('/example5urlsegments/:food/:drink', (request, response, next) => {
   // Note the `:` in the route.
   // This only indicates to express this is a URL segment.
   // You do NOT put this in the web browser address bar.
+  //
+  // So to get these url segments you use `request.params`.
+  // Then use use the name after that `:` in your route.
   var thefood = request.params.food
   var thedrink = request.params.drink
   // Let's console log these to make sure we have them correctly.
