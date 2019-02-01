@@ -36,7 +36,6 @@ app.get('/example1', (request, response, next) => {
 //
 // This time we will not output the HTML directly (i.e. not with response.send) 
 app.get('/example2', (request, response, next) => { 
-
 	// This time we don't use `response.send`. Instead we use response.sendFile()
 	// 
   // With response.sendFile(), we specify the location of a file. Thie file lives with views/ourpage.html
