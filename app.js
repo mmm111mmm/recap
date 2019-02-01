@@ -220,11 +220,11 @@ app.get('/a_get_route', function(request, response, next) {
   // With these new query parameters, we'd normally do something with them.
   // For example, we might render a difference page, or send different data
   // to the handlebars page. But for now we'll just send them to our handlebars file.
-	let our_data = {
-		food: thefood,
-		drink: thedrink
-	}
-	console.log(our_data)
+  let our_data = {
+    food: thefood,
+    drink: thedrink
+  }
+  console.log(our_data)
   // As a simple example, in our views/our_get_route_with_data.hbs file 
   // we simply print our the information in our_data.	
   response.render('our_get_route_with_data', our_data);
@@ -258,14 +258,14 @@ app.get('/a_get_route_with_url_segments/:food/:drink', function(request, respons
   // Let's console log these to make sure we have them correctly.
   // We will need to look in the terminal to see these
   console.log("the url path segments are: ", thefood, " and ", thedrink)
-	
+
   // With these new parameters, we'd normally do something with them.
   // For example, we might render a difference page, or send different data
   // to the handlebars page. But for now we'll just send them to our handlebars file.
-	let our_data = {
-		food: thefood,
-		drink: thedrink
-	}
+  let our_data = {
+    food: thefood,
+    drink: thedrink
+  }
   // As a simple example, in our views/our_get_route_with_data.hbs file 
   // we simply print our the information in our_data.	
   response.render('our_get_route_with_data', our_data);
