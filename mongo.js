@@ -1,6 +1,7 @@
-// Before, when we created GET and POST routes, the data disppeared after the request.
+//
+// Before, when we created GET and POST routes in express, the data disppeared after the request.
 // 
-// If we want to save data between requests, we need to use a database.
+// If we want to save data between requests, like registered users or facebook posts for example, we need to use a database.
 //
 // The database we will be using is Mongo. 
 //
@@ -9,6 +10,10 @@
 // # The section deals with using Mongo without Mongoose with Javascript Promises
 // #
 // #########
+
+// If you don't understand Promises, please see my notes on Promises before you start.
+
+// TO BE CONTINUED
 
 MongoClient.connect(url)
 .then(function(mongo) {

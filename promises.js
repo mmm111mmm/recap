@@ -44,19 +44,18 @@ var url = "mongodb://localhost:27017/";
 
 // Now let's connect to Mongodb
 // The first parameter is the url of our database
-// The second is a object that Mongo now requires so we use 
-// the new style of URL (which we're using)
+// The second is a object that says we are using the new style of connection URL (which we are)
 // The third parameter is our callback
 MongoClient.connect(url, { useNewUrlParser: true }, connectionSuccess)
 
-// Mongo calls this function when have have succeeded to, or failed to, connect to the database
+// Mongo calls this function when we have connected to the database (or failed)
 function connectionSuccess(error, mongo) {
   // If there's been an error, let's print our the error
   if(error) {
     console.log("Error connecting to Mongo", error)
   } else {
-    // If no error, let's use the `mongo` object, that mongo gave us
-    // We'll use to access the database.
+    // If no error, let's use the `mongo` object, that mongo gave us.
+    // We'll use it to access the database.
     //
     // We're going to access the my_recap_database database, and the my_recap_collection collection.
     // If they don't exist, Mongo will create them for us.
