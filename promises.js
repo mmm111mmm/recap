@@ -1,6 +1,6 @@
 // #########
 // ##
-// ## Let's talk about Callbacks and Promises - and connecting to Mongo (without Mongoose) for an example
+// ## Let's talk about Callbacks and Promises - and connecting to Mongo (without Mongoose) as an example
 // ##
 // ##########
 
@@ -16,7 +16,7 @@
 //
 // We don't want our nodejs server to stop doing everything and wait.
 //
-// We want to allow our server to do other things, like signing up a new user.
+// We want to allow our server to do other things, like signing up a new user, in the meantime.
 //
 // And then when the linkedin import has finished, we want javascript to tell us.
 //
@@ -44,9 +44,9 @@ var url = "mongodb://localhost:27017/";
 
 // Now let's connect to Mongodb
 // The first parameter is the url of our database
+// The second is a object that Mongo now requires so we use 
+// the new style of URL (which we're using)
 // The third parameter is our callback
-// The second is a object that Mongo now requires so it doesn't use the old style url parser (we're only using...
-// ...the new style, so don't worry about it).
 MongoClient.connect(url, { useNewUrlParser: true }, connectionSuccess)
 
 // Mongo calls this function when have have succeeded to, or failed to, connect to the database
@@ -69,16 +69,14 @@ function connectionSuccess(error, mongo) {
 
 // This is callback we pass to know when we've connected to a database (and then want to insert something)
 function addToCollection(error, collection) {
-  // Mongo will call this function, since it's the callback we specified above
-  //
-  // It will pass a error object (if there's one)
+  // Mongo will pass a error object (if there's one)
   // or `collection` if it found the collection
   //
   if(error) {
     // If there's been an error, the 'error' object will have something in it
     console.log("Error opening the database and collection", error)
   } else {
-    // Now we can add to our database
+    // Now we can do something with our collection object
   }
 }
 
@@ -119,12 +117,10 @@ function addToCollection1(error, collection) {
 
 // This is the callback we pass to 'collection.insertOne` to know if everything succeeded or not.
 function hasInsertSucceeded(error, result) {
-  // This function will be run when we've inserted something.
-  // Error will be something if there's been an error
   if(error) {
     console.log("Error inserting something into my_recap_collection", error)
   } else {
-    console.log("Successfully added something into my_recap_collection with callbacks!")
+    console.log("Successfully added something into my_recap_collection with callbacks!\n")
   }
 }
 
@@ -132,7 +128,7 @@ function hasInsertSucceeded(error, result) {
 // This is increasingly getting horrible.
 // And it gets even worse, the more operations we have
 //
-// We could use anonymous functions:
+// We could do the same with with anonymous functions:
 //
 
 MongoClient.connect(url, { useNewUrlParser: true }, function(error, mongo) {
@@ -151,7 +147,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(error, mongo) {
           if(error) {
             console.log("Error inserting something into my_recap_collection", error)
           } else {
-            console.log("Successfully added something into my_recap_collection with callbacks and anonymous functions!")
+            console.log("Successfully added something into my_recap_collection with callbacks and anonymous functions!\n")
           }
         })
       }
@@ -178,13 +174,18 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(error, mongo) {
 //
 // Promises give you the same functionality as callbacks, but they're nicer to write, read and understand.
 //
+// They are used throughout javascript. Not just in databases.
+//
 // Let's have a look at them.
 //
-// First, you need to know various functions in javascript give you Promises.
+// First, you need to know some functions in javascript give you Promises.
 //
 // For example, MongoClient.connect(url) return a Promise 
 // (Note that before we were running MongoClient.connection(url, callback) -- and that didn't give you a promise
 // because you were using a callback)
+//
+// Not everything in Javascript returns a Promise. But the developers at MongoDB developed
+// their code to use Promises.
 //
 // When we have a Promise, we must do things:
 // * use a 'then'
@@ -193,13 +194,16 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(error, mongo) {
 // The 'then' part is run when everything has been successful.
 // The 'catch' part is run when there's been an error.
 
-MongoClient.connect(url)
+MongoClient.connect(url, { useNewUrlParser: true })
 .then(function(mongo) {
   console.log("In promise: Hooray we've connected to the database")
 })
 .catch(function(error) {
    console.log("In promise: Some kind of monogo error", error)
 })
+
+// Note! The code directly below the promise is immediately be called.
+// It's only later that either our 'then' or 'catch' functions will be called.
 
 // So we get our Promise `MongoClient.connect(url)`.
 //
@@ -222,7 +226,50 @@ MongoClient.connect(url, { useNewUrlParser: true }, function (error, mongo) {
   } 
 }
 */
-
+//
 // This is nice, but the nicest thing in Promises is the ability to chain them.
 //
-// 
+// We can make the `then` function in a Promise, itself return a Promise.
+// Then you can add another .then call for that new Promise:
+//
+
+MongoClient.connect(url, { useNewUrlParser: true })
+.then(function(mongo) {
+  console.log("In promise: Hooray we've connected to the database")
+  // The below return a Promise, because the MongoDB developers decided to use Promises
+  return mongo.db("my_recap_database").collection("my_recap_collection")
+})
+.then(function(collection) {
+  console.log("In promise: Hooray we've connected to the collection.\n")
+})
+.catch(function(error) {
+   console.log("In promise: Some kind of monogo error", error)
+})
+//
+// Note: We have only one .catch.
+// This will be called if either of the Promises error.
+//
+// We can 'chain' lots of Promises.
+// Now we'll chain promises to conenct to mongo, access the collection, 
+// add to the collection and print a success statement:
+
+MongoClient.connect(url, { useNewUrlParser: true })
+.then(function(mongo) {
+  console.log("In promise: Hooray we've connected to the database")
+  return mongo.db("my_recap_database").collection("my_recap_collection")
+})
+.then(function(collection) {
+  console.log("In promise: Hooray we've connected to the collection")
+  var country_data = {
+    "country" : "scotland",
+    "population" : "3000000"
+  }
+  // The below return a Promise
+  return collection.insertOne(country_data)
+})
+.then(function(goodResult) {
+   console.log("In promise: We've added something to the database!")
+})
+.catch(function(error) {
+   console.log("In promise: Some kind of monogo error", error)
+})
