@@ -275,3 +275,5 @@ MongoClient.connect(url, { useNewUrlParser: true })
 })
 
 // And now we have escaped the horrible, horrible syntax for callbacks with the help of Promises.
+
+// TODO: Talk about Promise.all
