@@ -55,7 +55,7 @@ function connectionSuccess(error, mongo) {
   if(error) {
     console.log("Error connecting to Mongo", error)
   } else {
-    // If no error, let's use the `mongo` object, that mongo have us
+    // If no error, let's use the `mongo` object, that mongo gave us
     // We'll use to access the database.
     //
     // We're going to access the my_recap_database database, and the my_recap_collection collection.
@@ -128,7 +128,7 @@ function hasInsertSucceeded(error, result) {
 // This is increasingly getting horrible.
 // And it gets even worse, the more operations we have
 //
-// We could do the same with with anonymous functions:
+// We could do the same with anonymous functions:
 //
 
 MongoClient.connect(url, { useNewUrlParser: true }, function(error, mongo) {
@@ -201,9 +201,10 @@ MongoClient.connect(url, { useNewUrlParser: true })
 .catch(function(error) {
    console.log("In promise: Some kind of monogo error", error)
 })
+// ... some more code after the promise...
 
-// Note! The code directly below the promise is immediately be called.
-// It's only later that either our 'then' or 'catch' functions will be called.
+// (Note! The code directly below the promise is immediately be called.
+// It's only later that either our 'then' or 'catch' functions will be called.)
 
 // So we get our Promise `MongoClient.connect(url)`.
 //
@@ -229,7 +230,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, function (error, mongo) {
 //
 // This is nice, but the nicest thing in Promises is the ability to chain them.
 //
-// We can make the `then` function in a Promise, itself return a Promise.
+// We can make the `then` function in a Promise returns another Promise.
 // Then you can add another .then call for that new Promise:
 //
 
@@ -273,3 +274,5 @@ MongoClient.connect(url, { useNewUrlParser: true })
 .catch(function(error) {
    console.log("In promise: Some kind of monogo error", error)
 })
+
+// And now we have escaped the horrible, horrible syntax for callbacks with the help of Promises.
