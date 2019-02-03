@@ -371,6 +371,8 @@ app.post("/a_post_route", function(request, response, next) {
 // What is it?  It's something that lives in the middle.
 //
 // The middleware is a function that is called before our routes.
+// At least, our routes that are defined after we define our middleware.
+// 
 // Middleware does things like: Check you are logged in, check for authorised users, 
 // make a log of all the user requests into your app, etc.
 //
@@ -396,7 +398,7 @@ app.post("/a_post_route", function(request, response, next) {
 // If they're using firefox we'll add a property to the request object
 // Then the normal route that the user called will have the property on the request object
 // NOTE: This is obviously a stupid example.
-// Normally you'd do something like logging, user authorisationg, redirecting to another webpage, etc
+// Normally you'd do something like logging, user authorisation, logging, etc
 app.use(function(request, response, next) {
   // Every request has headers
   // These are little bits of information like information about the web browser you are using
@@ -442,16 +444,14 @@ app.get("/if_firefox", function(request, response, next) {
 // (Something we'll learn later)
 // Then want to redirect them to another website if they're not logged in
 //
-// This is easy to do. We just say response.redirect(307, "https://wikipedia.org")
-// The page we want to redirect to is the second parameter.
-// But the first parameter is a HTTP status code. We will learn these later.
-// For now, just know that 307 means redirect.
+// This is easy to do. We just say response.redirect("https://wikipedia.org")
+// The page we want to redirect to is the parameter.
 
 // This creates a route - it will live at http://localhost:3000/take_me_to_wikipedia
 app.get("/take_me_to_wikipedia", function(request, response, next) {
   // Obviously this is a silly example.
   // Normally, you'd redirect a user if you detect they're not logged in, for example.
-  response.redirect(307, "https://wikipedia.org")
+  response.redirect("https://wikipedia.org")
 })
 
 

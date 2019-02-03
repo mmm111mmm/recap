@@ -68,6 +68,7 @@ MongoClient.connect(url)
 // This works well, and it's pure Mongo.
 // But we're going to use something called Mongoose
 
+
 // #########
 // #
 // # The section deals with using Mongo with Mongoose
@@ -76,7 +77,7 @@ MongoClient.connect(url)
 // #
 // #########
 
-// There is another way to add, delete, update and fetch data to Mongo.
+// There is another way to add, delete, update and fetch data from Mongo.
 // And this is called Mongoose. It has many features.
 //
 // But for the moment we'll just focus on connecting to our 
@@ -95,18 +96,68 @@ mongoose.connect('mongodb://localhost/my_recap_database');
 // This is an Javascript object that relates to a Mongo collection.
 // With this object we will add, delete, update and fetch data from that collection.
 //
-// TODO: Talk about 
-// * first param, schema to model
-// * find
-// * delete
-// * update
-// * giving different data compared to the schema
-const Song = mongoose.model('my_recap_songs', { song_title: String, artist: Number, time: Number});
+// We make a model with `mongoose.model()`.
+// * The first parameter is the database collection name
+// * The second line is what we call a schema.
+//
+// A schema tells Mongoose what our
+// data object willl look like.
+//
+// For example, "it will have a field called song_title, and that will be a string", etc
+//
+// The scheme will look like this:
+// {
+//   fieldName: fieldType,
+//   another:   fieldType,
+// }
+//
+// And the field type can String, Number, Array, Object, Boolean, etc.
+// We will talk about this in more detail later.
+//
+const songSchema = { song_title: String, artist: String };
+const Song = mongoose.model('my_recap_songs', songSchema);
 
-Song.create({ song_title: "create", artist: "create", time: 144 } )
+// Now we've create a Mongoose model, we can start using the `Song` object.
+//
+// We can create new song by saying `Song.create` and as its argument
+// we pass a javascript object that confirms to the schema we created.
+//
+// In other words, the object will have the same names as in our schema, and
+// the same type of data.
+
+Song.create({ song_title: "Rocky Raccoon", artist: "The Beatles"} )
 .then(function(success) {
   console.log("Success adding with create", success)
 })
 .catch(function(error) {
   console.log("Error adding", error)
+});
+
+// You can create many objects in a similar way
+
+var songs = [
+  { song_title: "So what", artist: "Miles Davis" },
+  { song_title: "All blues", artist: "Miles Davis" }
+]
+
+Song.create(songs)
+.then(function(success) {
+  console.log("Success adding with create", success)
 })
+.catch(function(error) {
+  console.log("Error adding", error)
+});
+
+// insert many
+
+// delete
+
+// find
+
+// update
+
+// find
+
+// There is a reference of all the possible calls here: https://mongoosejs.com/docs/api.html#Model
+
+

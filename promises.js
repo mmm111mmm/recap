@@ -179,7 +179,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(error, mongo) {
 //
 // First, you need to know some functions in javascript give you Promises.
 //
-// For example, MongoClient.connect(url) return a Promise 
+// For example, MongoClient.connect(url) returns a Promise 
 // (Note that before we were running MongoClient.connection(url, callback) -- and that didn't give you a promise
 // because you were using a callback)
 //
@@ -236,7 +236,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, function (error, mongo) {
 MongoClient.connect(url, { useNewUrlParser: true })
 .then(function(mongo) {
   console.log("In promise: Hooray we've connected to the database")
-  // The below return a Promise, because the MongoDB developers decided to use Promises
+  // The below returns a Promise, because the MongoDB developers decided to use Promises
   return mongo.db("my_recap_database").collection("my_recap_collection")
 })
 .then(function(collection) {
@@ -264,7 +264,7 @@ MongoClient.connect(url, { useNewUrlParser: true })
     "country" : "scotland",
     "population" : "3000000"
   }
-  // The below return a Promise
+  // The below returns a Promise
   return collection.insertOne(country_data)
 })
 .then(function(goodResult) {
