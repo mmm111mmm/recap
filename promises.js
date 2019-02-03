@@ -281,4 +281,115 @@ MongoClient.connect(url, { useNewUrlParser: true })
 
 // And now we have escaped the horrible, horrible syntax for callbacks with the help of Promises.
 
-// TODO: Talk about Promise.all
+// #########
+// ##
+// ## Promises and asynchronous code
+// ##
+// ##########
+
+// We said before that callbacks (and therefore Promises)
+// deal with long running tasks.
+//
+// We start a Promise, and at some point in the future, the `then`
+// or the `catch` function is called with the results of the
+// long running operation.
+//
+// This means the code directly under the Promise is called first.
+// Then later the promise's `then` or `catch` will be called
+// For example:
+
+/*
+MongoClient.connect(url, { useNewUrlParser: true })
+.then(function(mongo) {
+  console.log("I am called second.")
+})
+.catch(function(error) {
+   console.log("In promise: Some kind of monogo error", error)
+})
+console.log("I am called first.")
+*/
+
+// This may be a problem.
+//
+// Imagine you have two Promises.
+// The first Promise adds a document to Mongo
+// The second Promise fetches all the documents from Mongo.
+//
+// Because Promise's are asynchronous, you cannot guarantee
+// that the Promise to add a document happens before the 
+// Promise to fetch all the documents.
+//
+// For example:
+
+//
+// The Promise adds a document
+//
+/*
+MongoClient.connect(url, { useNewUrlParser: true })
+.then(function(mongo) {
+  return mongo.db("my_recap_database").collection("my_recap_collection")
+})
+.then(function(collection) {
+  var country_data = {
+    "country" : "scotland",
+    "population" : "3000000"
+  }  
+  return collection.insertOne(country_data)
+})
+.catch(function(error) {
+  console.log("In promise: Some kind of monogo error", error)
+})
+
+//
+// The Promise fetches some data
+//
+MongoClient.connect(url, { useNewUrlParser: true })
+.then(function(mongo) {
+  return mongo.db("my_recap_database").collection("my_recap_collection")
+})
+.then(function(collection) {
+  return collection.find().toArray()
+})
+.then(function(resultsFromFind) {
+  console.log(resultsFromFind)
+})
+.catch(function(error) {
+  console.log("In promise: Some kind of monogo error", error)
+})
+*/
+
+// Although we typed the add Promise before the
+// find Promise, the find Promise may finish before the
+// add Promise.
+
+// Promise.all solves this problem.
+
+// With Promise.all, we give it our two Promises as an array.
+// And it performs them one after the other: we can guarante the order.
+
+MongoClient.connect(url, { useNewUrlParser: true })
+.then(function(mongo) {
+  return mongo.db("my_recap_database").collection("my_recap_collection")
+})
+.then(function(collection) {
+  // We now perform two Promises
+  // But we use Promise.all to make sure
+  // one runs after the other, to guarantee the order.
+  return Promise.all([
+    collection.insertOne({ "country" : "wales", "population" : "1500000" }),
+    collection.find().toArray()
+  ]);
+})
+.then(function(insertAndFindResult) {
+  // insertAndFindResult is an array
+  // The first element is the result from our first Promise that 
+  // we passed in Promise.all
+  // The second element is the result from our second Promise that
+  // we passed in Promise.all
+
+  // Let's just print the results of our find
+  console.log(insertAndFindResult[1])
+})
+.catch(function(error) {
+  console.log("In promise: Some kind of monogo error", error)
+})
