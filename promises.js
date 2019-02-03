@@ -1,3 +1,8 @@
+
+// You can run this file with node promises.js
+// You need to have run `npm install mongodb` first.
+// But you need to read the comments to understand the recap lesson.
+
 // #########
 // ##
 // ## Let's talk about Callbacks and Promises - and connecting to Mongo (without Mongoose) as an example
