@@ -322,7 +322,7 @@ console.log("I am called first.")
 // For example:
 
 //
-// The Promise adds a document
+// The Promise that adds a document
 //
 /*
 MongoClient.connect(url, { useNewUrlParser: true })
@@ -341,7 +341,7 @@ MongoClient.connect(url, { useNewUrlParser: true })
 })
 
 //
-// The Promise fetches some data
+// The Promise that fetches some data
 //
 MongoClient.connect(url, { useNewUrlParser: true })
 .then(function(mongo) {
