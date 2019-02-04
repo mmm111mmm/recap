@@ -1,10 +1,9 @@
 // #################
-// #
 // # This document recaps "Mongoose | Introduction"
 // # http://learn.ironhack.com/#/learning_unit/6481
 //
-// # And talks a little about Mongo without Mongoose.
-// #
+// # You can run this file with `node mongo.js` - it will add various things to Mongo
+// # You will need to run `npm install mongoose` and have mongodb running.
 // #################
 
 // Before, when we created GET and POST routes with express, the data disppeared after the request.
@@ -93,7 +92,7 @@ MongoClient.connect(url, { useNewUrlParser: true })
 // But for the moment we'll just focus on connecting to our 
 // database and collection adding documents to that collection.
 //
-// We'll talk about its advanced features, including the Schema in more default, later.
+// We'll talk about its advanced features, including the Schema, later.
 //
 // We start by including Mongoose via npm 'npm install mongoose'
 //

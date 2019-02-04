@@ -12,7 +12,7 @@
 // 6. And how to use the expressjs Router object
 // 7. And how to access static files
 
-// You will run this file by typing: node app.js
+// You will run this file by typing: node express_handlebars.js
 // You needs npm modules so type 'npm install express hbs body-parser' -- but we talk about this in the comments.
 
 // #########  
