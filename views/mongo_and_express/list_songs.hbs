@@ -1,0 +1,10 @@
+<a href="/add">add</a>
+<hr>
+{{#songs}}
+  <div>Song title: {{ this.song_title }}</div>
+  <div>Artist: {{ this.artist }}</div>
+  <a href="/update/{{ this._id }}">Update</a>
+  <br>
+  <a href="/delete/{{ this._id }}">Delete</a>
+  <hr>
+{{/songs}}
