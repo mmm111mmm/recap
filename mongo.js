@@ -1,6 +1,6 @@
 // #################
 // #
-// # This document recaps Mongoose | Introduction
+// # This document recaps "Mongoose | Introduction"
 // # http://learn.ironhack.com/#/learning_unit/6481
 //
 // # And talks a little about Mongo without Mongoose.

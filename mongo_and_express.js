@@ -2,6 +2,16 @@
 // This shows how to use ExpressJS and Mongo and Mongoose
 // to make a CRUD app (Creating, Reading, Updating and Deleteing something from a database)
 
+// ####################
+// # This deals with everything in: 
+// # "Mongoose&Express | Create - Update Documents"
+// # http://learn.ironhack.com/#/learning_unit/6494
+// # And
+// # "Mongoose&Express | List - Read Documents"
+// # http://learn.ironhack.com/#/learning_unit/6490
+// ####################
+
+
 
 
 // Note: We're not dealing with error messages in this app.
