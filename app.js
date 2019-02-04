@@ -9,7 +9,8 @@
 // 3. GET methods: https://trello.com/c/VUcIMbBn/93-express-get-methods-route-params-query-string
 // 4. POST methods: https://trello.com/c/YtdkOi8T/99-express-post-method-request-body
 // 5. And how to redirect to another webpage or website
-// 5. And how to use the expressjs Router object
+// 6. And how to use the expressjs Router object
+// 7. And how to access static files
 
 // You will run this file by typing: node app.js
 // You needs npm modules so type 'npm install express hbs body-parser' -- but we talk about this in the comments.
@@ -23,6 +24,14 @@
 const express = require('express');
 // We now initalise express in the variable 'app'
 const app = express();
+
+// This starts our express server on port 3000
+// It means the server will live at http://localhost:3000
+app.listen(3000, function() {
+  console.log('My app listening on port 3000!')
+});
+
+
 
 // This creates a route - it will live at http://localhost:3000/send_a_string
 app.get('/send_a_string', function (request, response, next) { 
@@ -470,7 +479,7 @@ app.get("/if_firefox", function(request, response, next) {
 
 
 // #####################
-// ## This section relate to redirecting the user to another page or website
+// ## This section relates to redirecting the user to another page or website
 // #####################
 
 // Here's something small and extra
@@ -494,7 +503,7 @@ app.get("/take_me_to_wikipedia", function(request, response, next) {
 
 
 // #####################
-// ## This section relate to express.Router()
+// ## This section relates to express.Router()
 // #####################
 
 // Let's now talk about the expressJS Router
@@ -548,11 +557,27 @@ app.use("/anewpath", router)
 
 
 
+// #####################
+// ## This section relates to static files
+// #####################
 
+// We call the CSS files and images we use 'static' files.
 
+// We can tell Express about the location of these files with
 
+app.use(express.static('public'));
 
-// This starts our server on port 3000
-app.listen(3000, function() {
-  console.log('My app listening on port 3000!')
-});
+// This says all our static files are in a directory called 'public'
+
+// If you have cat.png in the 'public' directory,
+// then you can access it through localhost:3000/cat.jpeg
+
+// If you have a stylesheet style.css in 'public/stylesheets/'
+// then you can access it through localhost:3000/stylesheets/style.css
+
+// You can then refer to these files in your HTML
+// <img src="cat.jpg"></img>
+// or
+//  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+// Note: the 'public' part is absent from the URL.
