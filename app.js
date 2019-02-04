@@ -8,7 +8,8 @@
 // 2. Handlebars and layouts (Express | Layouts): https://trello.com/c/YvyNe5JY/86-express-layouts-but-no-partials-%F0%9F%87%A9%F0%9F%87%AA
 // 3. GET methods: https://trello.com/c/VUcIMbBn/93-express-get-methods-route-params-query-string
 // 4. POST methods: https://trello.com/c/YtdkOi8T/99-express-post-method-request-body
-// 5. Plus now to redirect to another webpage or website
+// 5. And how to redirect to another webpage or website
+// 5. And how to use the expressjs Router object
 
 // You will run this file by typing: node app.js
 // You needs npm modules so type 'npm install express hbs body-parser' -- but we talk about this in the comments.
@@ -66,13 +67,13 @@ app.get('/send_a_file', function (request, response, next) {
 // ## https://trello.com/c/MYCj8lFg/88-express-dynamic-views
 // ##################
 //
-// Previous we made a express route that prints out a file
+// Previously we made a express route that prints out a file
 //
 // But we cannot pass any javascript objects to /views/ourpage.html
 //
 // We can, however, use something called handlebars to do so.
 //
-// So must ensure you do "npm install hbs" in this directory (hbs means "handlebars")
+// You must ensure you do "npm install hbs" in this directory (hbs means "handlebars")
 // 
 // For handlebars, we need to set the views location on our express app object
 app.set('views', __dirname + '/views');
@@ -94,7 +95,7 @@ app.get('/handlebars', function(request, response, next) {
 });
 
 
-// We said we use handle bars to give javascript objects to handlebars.
+// We said we will send javascript objects to a handlebars page.
 // We're not doing that now, but we will with our next route.
 
 // This creates a route - it will live at http://localhost:3000/handlebars_with_data
@@ -135,7 +136,7 @@ app.get('/handlebars_with_data', function(request, response, next) {
 // # https://trello.com/c/YvyNe5JY/86-express-layouts-but-no-partials-%F0%9F%87%A9%F0%9F%87%AA
 // #########
 
-// Let's image your want copyright 2019 on the bottom of all of your pages.
+// Let's imagine you want copyright 2019 on the bottom of all of your pages.
 // 
 // Handlebars allows you to do this easily.
 //
@@ -195,7 +196,7 @@ app.get('/handlebars_with_data', (request, response, next) => {
 // The client sends the query parameters by putting the `?` symbol after the website url.
 // 
 // Then the user gives a parameter name (i.e. food), then =, then the value (i.e. greek).
-// And your separate more than one parameter with the `&` sign.
+// And you separate more than one parameter with the `&` sign.
 //
 // Let's now get these query parameters in our route.
 //
@@ -208,11 +209,11 @@ app.get('/a_get_route', function(request, response, next) {
   //
   // So we use request.query and then we specify name of the query parameter.
   //
-  // And if we look above, we passed two parameter: one called firstparameter and another called secondparameter
+  // And if we look above, we passed two parameter: one called food and another called drink.
   var thefood = request.query.food
   var thedrink = request.query.drink
-  // Let's console log these to make sure we have them correctly.
-  // We will need to look in the terminal to see these
+  // Let's console log these to make sure we have them.
+  // We will need to look in the nodejs terminal to see these
   console.log("the query parameter are: ", thefood, " and ", thedrink)
   // Remember we can only test this when the URL has the query parameters, i.e.
   // http://localhost:3000/a_get_route?food=greek&drink=ouzo
@@ -304,7 +305,7 @@ app.get('/a_get_route_with_url_segments/:food/:drink', function(request, respons
 */
 //
 // the 'action' attribute on the form tag points to our route name (which we haven't created yet).
-// the 'method' attribute on the form tag says we're going to me a POST request
+// the 'method' attribute on the form tag says we're going to use a POST request
 // the 'name' attribute on the input tags define the name of the parameter we will send to our post route
 // the button (with type="submit") will send our data to the post route (which we haven't created yet)
 //
@@ -353,6 +354,7 @@ app.post("/a_post_route", function(request, response, next) {
   // For example, using the filled in HTML form, it could be like this
   //  
   // { food: 'mozerella', drink: 'whiskey' }
+  //
   // With this new POST data, we'd normally do something with it.
   // For example, we might render a difference page, or send different data
   // to the handlebars page. But for now we'll just send them to our handlebars file.
@@ -373,13 +375,13 @@ app.post("/a_post_route", function(request, response, next) {
 // The middleware is a function that is called before our routes.
 // At least, our routes that are defined after we define our middleware.
 // 
-// Middleware does things like: Check you are logged in, check for authorised users, 
+// Middleware does things like: Check you are logged in, 
 // make a log of all the user requests into your app, etc.
 //
 // Let's look at an example:
 //
 //app.use(function(request, response, next) {
-//  console.log("I am called before every request")
+//  console.log("I am called before subsequent requests")
 //  next();
 //})
 //
@@ -397,8 +399,9 @@ app.post("/a_post_route", function(request, response, next) {
 // Our middleware will look at the user's web browser.
 // If they're using firefox we'll add a property to the request object
 // Then the normal route that the user called will have the property on the request object
+//
 // NOTE: This is obviously a stupid example.
-// Normally you'd do something like logging, user authorisation, logging, etc
+// Normally you'd do something like logging, user authorisation, etc
 app.use(function(request, response, next) {
   // Every request has headers
   // These are little bits of information like information about the web browser you are using
@@ -457,7 +460,6 @@ app.get("/take_me_to_wikipedia", function(request, response, next) {
 
 
 // This starts our server on port 3000
-// We must put this at the bottom of our file
-app.listen(3000, () => {
-  console.log('My first app listening on port 3000!')
+app.listen(3000, function() {
+  console.log('My app listening on port 3000!')
 });
