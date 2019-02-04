@@ -439,6 +439,7 @@ app.get("/if_firefox", function(request, response, next) {
   response.send("Are you using firefox? " + request.usingFirefox)
 })
 
+
 // Here's something small and extra
 //
 // Sometimes we want to redirect the user to another webpage
@@ -456,6 +457,60 @@ app.get("/take_me_to_wikipedia", function(request, response, next) {
   // Normally, you'd redirect a user if you detect they're not logged in, for example.
   response.redirect("https://wikipedia.org")
 })
+
+
+// Let's now talk about the expresJS Router file
+// 
+// This allows us to create 'modular' routes.
+// They're nothing special. 
+//
+// Let's see:
+
+// I'm using the express package we imported at the start of the file.
+// And I'm using its Router() function.
+// This gives us a variable that we're calling 'router'
+const router  = express.Router();
+
+// We're using the router object.
+// And we're adding a normal GET route to it.
+router.get('/i_am_a_route', (req, res, next) => {
+  // I'm just printing out plain text from this route
+  res.send('Yes, I am a router');
+});
+
+// And we can do this again:
+router.get('/i_am_another_route', (req, res, next) => {
+  // I'm just printing out plain text from this route
+  res.send('Yes, I am another router');
+});
+
+// NOTE: Neither of these routes are live yet.
+
+// To make them live, we must add the 'router' variable
+// to our 'app' variable using its `use()` function.
+
+app.use("/", router)
+
+// Now the routes live at
+// http://localhost:3000/i_am_a_route
+// and
+// http://localhost:3000/i_am_another_route
+
+// This is just another way of adding routes.
+//
+// But we can also do something a little interesting
+
+// Note the first parameter is /anewpath
+app.use("/anewpath", router)
+
+// Now the routes live at
+// http://localhost:3000/anewpath/i_am_a_route
+// and
+// http://localhost:3000/anewpath/i_am_another_route
+
+
+
+
 
 
 
