@@ -175,7 +175,22 @@ app.get('/handlebars_with_data', (request, response, next) => {
 //
 // In this example, the content of body will be whatever relates to response.render('ourhandlebarspage_withdata')
 // i.e. the content of 'ourhandlebarspage_withdata.hbs'.
-
+//
+//
+// In addition, our layout.hbs file can access any data we sent to the handlebars file.
+//
+// For example, imagine we do this:
+//
+/*
+  var ourobject = {
+    title: "A new page",
+    name: "Aaron",
+    drink: "whiskey"
+  }
+  response.render('ourhandlebarspage_withdata', ourobject);
+*/
+//
+// then our layout.hbs will be able to access {{ title }}.
 
 
 
