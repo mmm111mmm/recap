@@ -14,7 +14,7 @@
 // You will run this file by typing: node app.js
 // You needs npm modules so type 'npm install express hbs body-parser' -- but we talk about this in the comments.
 
-// #########
+// #########  
 // # Everything in this section relates to the intro to node lesson
 // # https://trello.com/c/86ZKDbJU/84-express-introduction
 // #########
@@ -246,6 +246,15 @@ app.get('/a_get_route', function(request, response, next) {
   response.render('our_get_route_with_data', our_data);
 });
 
+
+
+
+// #####################
+// ## This section relates to: Passing data to our routes (with GET routes)
+// ## But this time with URL segments.
+// ## https://trello.com/c/VUcIMbBn/93-express-get-methods-route-params-query-string
+// #####################
+
 // There's another way to get data from a GET request
 // It's called using URL path segments or URL parameters
 //
@@ -286,8 +295,6 @@ app.get('/a_get_route_with_url_segments/:food/:drink', function(request, respons
   // we simply print our the information in our_data.	
   response.render('our_get_route_with_data', our_data);
 })
-
-
 
 
 
@@ -382,6 +389,12 @@ app.post("/a_post_route", function(request, response, next) {
   response.render('our_post_route_with_data', our_data);
 })
 
+
+
+// #####################
+// ## This section relates to ExpressJS middleware
+// #####################
+
 // Let's talk about something different.
 // Let's talk about express middleware.
 //
@@ -455,6 +468,11 @@ app.get("/if_firefox", function(request, response, next) {
 })
 
 
+
+// #####################
+// ## This section relate to redirecting the user to another page or website
+// #####################
+
 // Here's something small and extra
 //
 // Sometimes we want to redirect the user to another webpage
@@ -474,7 +492,12 @@ app.get("/take_me_to_wikipedia", function(request, response, next) {
 })
 
 
-// Let's now talk about the expresJS Router file
+
+// #####################
+// ## This section relate to express.Router()
+// #####################
+
+// Let's now talk about the expressJS Router
 // 
 // This allows us to create 'modular' routes.
 // They're nothing special. 
