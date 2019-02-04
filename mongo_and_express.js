@@ -19,18 +19,24 @@
 // Specifically, we're not telling the website user about them.
 // We'll look at dealing with them later.
 
+// You can run it by first importing everything
+// npm install expres mongoose and body-parser
+// Then 
+// node mongo_and_express.js
 
-// `require` packages for Express, Mongoose and bodyParser (to help with POST routes)
-// This means you must do `npm install expres mongoose and body-parser` in this directory
-const express = require('express')
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser');
+
 
 // ############
 // # 
 // # We're now going to setup Express and Mongoose
 // #
 // #############
+
+// `require` packages for Express, Mongoose and bodyParser (to help with POST routes)
+// This means you must do `npm install expres mongoose and body-parser` in this directory
+const express = require('express')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser');
 
 // Setup Expressjs
 const app = express()
@@ -42,6 +48,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.listen(3000, function() {
   console.log("Listening on port 3000")
 })
+
 // Setup Mongoose and point it at our database
 mongoose.connect('mongodb://localhost/my_recap_database', { useNewUrlParser: true });
 // Setup mongoose model
@@ -84,7 +91,6 @@ app.post('/add_song_post_route', function(request, response, next) {
 })
 
 
-
 // ############
 // # 
 // # Let's setup a route to list our songs
@@ -107,7 +113,6 @@ app.get('/', function(request, response, next) {
   });
 
 })
-
 
 
 // ############
