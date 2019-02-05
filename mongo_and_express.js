@@ -13,12 +13,12 @@
 // # That is, we will create a CRUD app.
 // #
 // # Our CRUD app will allows us to Create, Read, Update
-// # and Delete songs to a database.
+// # and Delete songs in a database.
 // #
 // ####################
 
 // You can run this file by first importing everything
-// npm install expres mongoose and body-parser
+// npm install express mongoose and body-parser
 // Then 
 // node mongo_and_express.js
 
@@ -219,6 +219,12 @@ app.get('/', function(request, response, next) {
 
     // We'll use handlebars to display all the
     // songs in our oursongs object.
+    //
+    // list_songs.hbs will iterate through
+    // our above array: show the song, show
+    // the artist, show a link to a delete the
+    // song, and show a link to update the song.
+    // (We'll deal with updating and deleting below)
     response.render('list_songs', oursongs);
   })
   .catch(function(error) {
