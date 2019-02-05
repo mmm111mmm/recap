@@ -1,5 +1,3 @@
-// WORK IN PROGRESS: I NEED TO ADD MORE COMMENTS.
-
 // ####################
 // # We previously learnt about expressJS.
 // # And we learnt about Promises.
@@ -149,7 +147,7 @@ app.post('/add_song_post_route', function(request, response, next) {
     // In a bigger app we'd tell the user what the 
     // error was. (We'll learn this later)
     response.render("error")
-  })
+  }); // end of the Promise
 
   // Note: the response.render()s are only inside
   // the Promise, since we want to wait for the Promise,
@@ -237,7 +235,12 @@ app.get('/', function(request, response, next) {
     // In a bigger app we'd tell the user what the 
     // error was. (We'll learn this later)    
     response.render("error")
-  });
+  }); // end of the Promise
+
+  // Note: the response.render()s are only inside
+  // the Promise, since we want to wait for the Promise,
+  // and therefore Mongo, to complete before 
+  // talking to the client (i.e. user)  
 
 })
 
@@ -344,16 +347,21 @@ app.get('/update/:id', function(request, response, next) {
 
   })
   .catch(function(error) {
-    // If there was an error adding our song,
+    // If there was an error finding our song,
     // like if mongodb has been shut down,
     // Then the 'catch' part of our Promise
     // will be called.    
-    console.log("Error updating the song", error)
+    console.log("Error finding the song", error)
     // We're just going to render an error page.
     // In a bigger app we'd tell the user what the 
     // error was. (We'll learn this later)    
     response.render("error")    
-  });
+  });  // end of the Promise
+
+  // Note: the response.render()s are only inside
+  // the Promise, since we want to wait for the Promise,
+  // and therefore Mongo, to complete before 
+  // talking to the client (i.e. user)  
 
 })
 
@@ -373,7 +381,7 @@ app.post('/update_song_post_route', function(request, response, next) {
   //
   // <input name="song_title" value="...">
   // And
-  // <input name="song_title" value="...">
+  // <input name="artist" value="...">
 
   // Let's use that data to make an object that
   // we will use to update our Mongo document eventually.
@@ -401,17 +409,36 @@ app.post('/update_song_post_route', function(request, response, next) {
 
   var mongoFilter = { _id: mongoose.Types.ObjectId(mongoDocumentId) } 
 
-  
+  // Let's now use Mongoose's Song.updateOne
+  // Its first parameter is the filter to find our song to update.
+  // Its second parameter is the updated song, that we make
+  // by looking at this route's POST body.
 
   Song.updateOne(mongoFilter, updatedSong)
   .then(function(success) {
+    // If we get into this Promise's .then()
+    // it means it's successfully updated our song.
     console.log("Updated our post, apparently", success)
+    // Let's simply redirect to the / route, so
+    // we list all our songs again.
     response.redirect('/');
   })
   .catch(function() {
-    console.log("error updating song")
-    response.render("error")
-  })
+    // If there was an error updating our song,
+    // like if mongodb has been shut down,
+    // Then the 'catch' part of our Promise
+    // will be called.    
+    console.log("Error updating the song", error)
+    // We're just going to render an error page.
+    // In a bigger app we'd tell the user what the 
+    // error was. (We'll learn this later)    
+    response.render("error")   
+  });  // end of the Promise
+
+  // Note: the response.render()s are only inside
+  // the Promise, since we want to wait for the Promise,
+  // and therefore Mongo, to complete before 
+  // talking to the client (i.e. user)    
 
 })
 
@@ -425,22 +452,69 @@ app.post('/update_song_post_route', function(request, response, next) {
 // #
 // #############
 
-// A GET route that will delete a song
+// The final thing is to delete a song.
+
+// This route will live at http://localhost:3000/delete/some_id_from_mongo
 app.get('/delete/:id', function(request, response, next) { 
 
+  // We're using GET url segments to get data from the user.
+  // You can see this since there's a : in the route name:
+  // /update/:id
+
+  // To get at this URL segment, you type request.params
+  // then the name of the segment, in our case
+  // request.params.id
+  //
+  // This will be the _id for a document that lives in Mongo.
+  // It will be this, because in our list_songs.hbs we made a 
+  // link:
+  // <a href="/delete/{{ this._id }}">Delete</a>
+
   var mongoDocumentId = request.params.id
-  var mongoFilter = { _id: mongoose.Types.ObjectId(mongoDocumentId) } 
+
+  // We're now going to create a filter for Mongo.
+  // If you remember when we used Mongo Compass then
+  // this is the same thing.
+
+  // We're looking for a record with the _id to be what 
+  // we found in mongoDocumentId.
+
+  // But because the _id is a special MongoDB object we must use
+  // mongoose.Types.ObjectId()
+
+  var mongoFilter = { _id: mongoose.Types.ObjectId(mongoDocumentId) }   
+
+  // We're now going to use Mongoose's deleteOne() function.
+  // This takes in the Mongo filter we created above.
+  // It will find that file and delete that file.
 
   Song.deleteOne(mongoFilter)
   .then(function(success) {
+    // If the .then() part of the Promise is called
+    // it means Mongo's delete has been successful.
     console.log("Apparently we deleted something", success)
+    // We'll just redirect user to the / route
+    // so he or she sees the list of songs again
     response.redirect("/")
   })
   .catch(function(error) {
-    console.log("Error deleting item", error)
-    response.render("error")
-  })
+    // If there was an error deleting our song,
+    // like if mongodb has been shut down,
+    // Then the 'catch' part of our Promise
+    // will be called.    
+    console.log("Error deleting the song", error)
+    // We're just going to render an error page.
+    // In a bigger app we'd tell the user what the 
+    // error was. (We'll learn this later)    
+    response.render("error")   
+  });  // end of the Promise
+
+  // Note: the response.render()s are only inside
+  // the Promise, since we want to wait for the Promise,
+  // and therefore Mongo, to complete before 
+  // talking to the client (i.e. user)   
 
 })
 
 // There is a reference of all the possible Mongoose calls here: https://mongoosejs.com/docs/api.html#Model
+// The calls we used above (create, find, updateOne, delete are usually enough)
