@@ -358,20 +358,50 @@ app.get('/update/:id', function(request, response, next) {
 })
 
 // When we go to the above route, it will give us a HTML
-// form, and when we edit our song, and then when we press submit
+// form, and when we edit our song press submit
 // we will be taken to this route, because that HTML form
 // said so.
 
 // This route will live at http://localhost:3000/update_song_post_route
 app.post('/update_song_post_route', function(request, response, next) { 
 
+  // Once we press submit on the HTML form, we will end
+  // up here.
+
+  // And in request.body we will have data.
+  // Data that was passed though the HTML form through:
+  //
+  // <input name="song_title" value="...">
+  // And
+  // <input name="song_title" value="...">
+
+  // Let's use that data to make an object that
+  // we will use to update our Mongo document eventually.
+  // Remember, this conform to the Mongo schema we created, i.e.
+  // const songSchema = { song_title: String, artist: String }
+
   var updatedSong = {
     song_title: request.body.song_title,
     artist: request.body.artist
   }
 
+  // But before we update our song, we need to find the existing
+  // song in Mongo to update.
+  //
+  // And we find this song by using the Mongo Document's _id field.
+  //
+  // And we passed this data into our form using:
+  // 
+  // <input type="hidden" name="id" value="{{ song._id }}">
+
   var mongoDocumentId = request.body.id
+
+  // Now let's use this mongoDocumentId to create a Mongo
+  // filter that will find this song:
+
   var mongoFilter = { _id: mongoose.Types.ObjectId(mongoDocumentId) } 
+
+  
 
   Song.updateOne(mongoFilter, updatedSong)
   .then(function(success) {
