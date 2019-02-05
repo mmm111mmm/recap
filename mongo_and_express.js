@@ -114,18 +114,45 @@ app.get('/add', function(request, response, next) {
 // This route will live at http://localhost:3000/add_song_post_route
 app.post('/add_song_post_route', function(request, response, next) { 
 
+  // Firstly the user has used a HTML form to give us some data
+  // That now lives in `request.body.song_title`
+  // We're going to create a simple javascript object with that information
+  // in it.
+
+  // Note, that this object confirms to the Mongoose schema we specified
+  // const songSchema = { song_title: String, artist: String };
+
   var newsong = {
     song_title: request.body.song_title,
     artist: request.body.artist
   }
 
+  // We now use `Song.create` and pass in our object from above
+  // Note: Song.create() gives us a Promise.
+
   Song.create(newsong)
   .then(function() {
+    // If we successfully created the song
+    // then we redirect to our / route
+    // (We'll see this defined below)
     response.redirect('/');
   })
-  .catch(function() {
-    console.log("error adding song")
+  .catch(function(error) {
+    // If there was an error adding our song,
+    // like if mongodb has been shut down,
+    // Then the 'catch' part of our Promise
+    // will be called.
+    console.log("error adding song", error)
+    // We're just going to render an error page.
+    // In a bigger app we'd tell the user what the 
+    // error was. (We'll learn this later)
+    response.render("error")
   })
+
+  // Note: the response.render()s are only inside
+  // the Promise, since we want to wait for the Promise,
+  // and therefore Mongo, to complete before 
+  // talking to the client (i.e. user)
 
 })
 
@@ -139,19 +166,69 @@ app.post('/add_song_post_route', function(request, response, next) {
 // #
 // #############
 
-// A GET route to show all our songs
+// This is the route that the /add_song_post_route
+// route redirects too when a song was successfully
+// added.
+
+// This route will live at http://localhost:3000/
 app.get('/', function(request, response, next) { 
+
+  // We're going to use Song.find() to fetch all our songs.
+  // This returns a Promise.
+
+  // If you remember this http://learn.ironhack.com/#/learning_unit/6471
+  // lesson we learn about all the ways to find Documents in Mongo.
+  // For example, sorting, find only records with such and such data.
+  // 
+  // This is the call where we can do all that.
+  //
+  // To find only the Documents that have "The Beatles" as an artist
+  // you'd say Song.find({ artist: "The Beatles" })
+  //
+  // If you wanted to sort the songs, you'd do
+  // Song.find().sort({ artist: -1 })
+  //
+  // In our case, we're just returning all the documents in any order
 
   Song.find()
   .then(function(mongoSongs) {
+    // If our find() call succeeded,
+    // then .then() part of our Promise
+    // will have all the songs in them.
+    //
+    // That is, mongoSongs is an array of songs 
+    // like this:
+    //
+    // [ { _id: "5c582d22005ffe4a3414e234",
+    //     song_title: "Aaron",
+    //     artist: "Paul Kalkbrenner"
+    //   },
+    //   { _id: "5c582d22005ffe4a3414e234",
+    //     song_title: "Rocky Racoon",
+    //     artist: "The Beatles"
+    //   }
+    // ]
+
+    // We're putting all that into an object
+    // that we will pass to our handlebars file
     var oursongs = {
       songs: mongoSongs
     }
-    console.log("Success getting all our songs via Mongoose's find", oursongs)
+
+    // We'll use handlebars to display all the
+    // songs in our oursongs object.
     response.render('list_songs', oursongs);
   })
   .catch(function(error) {
+    // If there was an error adding our song,
+    // like if mongodb has been shut down,
+    // Then the 'catch' part of our Promise
+    // will be called.    
     console.log("Error listing", error)
+    // We're just going to render an error page.
+    // In a bigger app we'd tell the user what the 
+    // error was. (We'll learn this later)    
+    response.render("error")
   });
 
 })
@@ -166,7 +243,19 @@ app.get('/', function(request, response, next) {
 // #
 // #############
 
-// A GET route that will show a form to update a song.
+// We're going to allow the user to edit a song.
+// In our list_songs.hbs file we have this line.
+//
+//   <a href="/update/{{ this._id }}">Update</a>
+//
+// This uses the _id variable that's given to us
+// via Mongo (remember we're iterating over an
+// array that Mongo gave us in list_songs.hbs) 
+//
+// So when we click on the above link it will take us
+// to the following route.
+
+// This route will live at http://localhost:3000/update/some_id_from_mongo
 app.get('/update/:id', function(request, response, next) { 
 
   var mongoDocumentId = request.params.id
@@ -181,6 +270,7 @@ app.get('/update/:id', function(request, response, next) {
   })
   .catch(function(error) {
     console.log("Error showing the update form", error)
+    response.render("error")
   });
 
 })
@@ -203,6 +293,7 @@ app.post('/update_song_post_route', function(request, response, next) {
   })
   .catch(function() {
     console.log("error updating song")
+    response.render("error")
   })
 
 })
@@ -230,9 +321,9 @@ app.get('/delete/:id', function(request, response, next) {
   })
   .catch(function(error) {
     console.log("Error deleting item", error)
+    response.render("error")
   })
 
 })
 
 // There is a reference of all the possible Mongoose calls here: https://mongoosejs.com/docs/api.html#Model
-//
