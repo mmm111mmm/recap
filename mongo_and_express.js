@@ -1,3 +1,5 @@
+// WORK IN PROGRESS: I NEED TO ADD MORE COMMENTS.
+
 // ####################
 // # We previously learnt about expressJS.
 // # And we learnt about Promises.
@@ -258,33 +260,112 @@ app.get('/', function(request, response, next) {
 // This route will live at http://localhost:3000/update/some_id_from_mongo
 app.get('/update/:id', function(request, response, next) { 
 
+  // We're using GET url segments to get data from the user.
+  // You can see this since there's a : in the route name:
+  // /update/:id
+
+  // To get at this URL segment, you type request.params
+  // then the name of the segment, in our case
+  // request.params.id
+  //
+  // This will be the _id for a document that lives in Mongo.
+  // It will be this, because we made sure it would be with:
+  // <a href="/update/{{ this._id }}">Update</a>
+  // In our list_songs.hbs file.
+
   var mongoDocumentId = request.params.id
+
+  // We're now going to create a filter for Mongo.
+  // If you remember when we used Mongo Compass then
+  // this is the same thing.
+
+  // We're looking for a record with the _id to be what 
+  // we found in mongoDocumentId.
+
+  // But because the _id is a special MongoDB object we must use
+  // mongoose.Types.ObjectId()
+
   var mongoFilter = { _id: mongoose.Types.ObjectId(mongoDocumentId) } 
+
+  // Now we're going to pass that filter in to
+  // Song.findOne(). And that gives us a Promise.
 
   Song.findOne(mongoFilter)
   .then(function(songFromMongo) {
+    // If we found our song then the
+    // .then() part of the Promise will be
+    // called. 
+    //
+    // And it will give us our song, for example
+    //
+    // { _id: "5c582d22005ffe4a3414e234",
+    //   song_title: "Aaron",
+    //   artist: "Paul Kalkbrenner"
+    // }
+    // 
+
+    // We'll now put that in a object
+
     var oursong = {
       song: songFromMongo 
     }
+
+    // And we'll send it to our update_song.hbs
+    // file.
     response.render("update_song", oursong)
+
+    // In the update_song.hbs file, we'll fill in our HTML
+    // form:
+
+    /*
+    <form action="/update_song_post_route" method="POST">
+      <input type="hidden" name="id" value="{{ song._id }}">
+      <input name="song_title" value="{{ song.song_title }}" placeholder="Enter the name of the song">
+      <br>
+      <input name="artist" value="{{ song.artist }}" placeholder="Enter the name of the artist">
+      <br>
+      <button type="submit">Update song</button>
+    </form>
+    */
+
+    // Note the {{ song.song_title }} gives us the song title in our
+    // HTML form.
+
+    // When the user presses submit, it will take us to
+    // a new route (as defined in the "action" attribute)
+    // /update_song_post_route 
+    // which we will define next.
+
   })
   .catch(function(error) {
-    console.log("Error showing the update form", error)
-    response.render("error")
+    // If there was an error adding our song,
+    // like if mongodb has been shut down,
+    // Then the 'catch' part of our Promise
+    // will be called.    
+    console.log("Error updating the song", error)
+    // We're just going to render an error page.
+    // In a bigger app we'd tell the user what the 
+    // error was. (We'll learn this later)    
+    response.render("error")    
   });
 
 })
 
-// A POST route that will update our song collecting with the user's input
-app.post('/update_song_post_route', function(request, response, next) { 
+// When we go to the above route, it will give us a HTML
+// form, and when we edit our song, and then when we press submit
+// we will be taken to this route, because that HTML form
+// said so.
 
-  var mongoDocumentId = request.body.id
-  var mongoFilter = { _id: mongoose.Types.ObjectId(mongoDocumentId) } 
+// This route will live at http://localhost:3000/update_song_post_route
+app.post('/update_song_post_route', function(request, response, next) { 
 
   var updatedSong = {
     song_title: request.body.song_title,
     artist: request.body.artist
   }
+
+  var mongoDocumentId = request.body.id
+  var mongoFilter = { _id: mongoose.Types.ObjectId(mongoDocumentId) } 
 
   Song.updateOne(mongoFilter, updatedSong)
   .then(function(success) {
