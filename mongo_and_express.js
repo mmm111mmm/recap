@@ -41,11 +41,11 @@
 
 // ############
 // # 
-// # We're now going to setup Express and Mongoose
+// # We're going to setup Express and Mongoose
 // #
 // #############
 
-// `require` packages for Express, Mongoose and body-parser (to help with POST routes)
+// We `require` packages for Express, Mongoose and body-parser (to help with POST routes)
 // This means you must do `npm install expres mongoose and body-parser` in this directory
 const express = require('express')
 const mongoose = require('mongoose')
@@ -66,10 +66,12 @@ app.listen(3000, function() {
 mongoose.connect('mongodb://localhost/my_recap_database', { useNewUrlParser: true });
 // Setup mongoose model
 // This Scheme specfies that we'll save the song_title
-// and artist of our song in a Mongo collection called "my_recap_songs"
+// and artist of our song.
 const songSchema = { song_title: String, artist: String };
 // Now get our 'Song' object that let's us
 // add, delete, update and list our songs
+// The first parameter means we're using a collection called "my_recap_songs"
+// It is automatically created, if it did not exist.
 const Song = mongoose.model('my_recap_songs', songSchema);
 
 
@@ -115,7 +117,7 @@ app.get('/add', function(request, response, next) {
 app.post('/add_song_post_route', function(request, response, next) { 
 
   // Firstly the user has used a HTML form to give us some data
-  // That now lives in `request.body.song_title`
+  // That now lives in `request.body.song_title` and `request.body.artist`
   // We're going to create a simple javascript object with that information
   // in it.
 
@@ -167,8 +169,10 @@ app.post('/add_song_post_route', function(request, response, next) {
 // #############
 
 // This is the route that the /add_song_post_route
-// route redirects too when a song was successfully
+// route redirects to when a song was successfully
 // added.
+
+// It simply shows all our songs.
 
 // This route will live at http://localhost:3000/
 app.get('/', function(request, response, next) { 
@@ -278,9 +282,9 @@ app.get('/update/:id', function(request, response, next) {
   // request.params.id
   //
   // This will be the _id for a document that lives in Mongo.
-  // It will be this, because we made sure it would be with:
+  // It will be this, because we made sure it would be with this link:
   // <a href="/update/{{ this._id }}">Update</a>
-  // In our list_songs.hbs file.
+  // in our list_songs.hbs file.
 
   var mongoDocumentId = request.params.id
 
@@ -384,7 +388,7 @@ app.post('/update_song_post_route', function(request, response, next) {
   // <input name="artist" value="...">
 
   // Let's use that data to make an object that
-  // we will use to update our Mongo document eventually.
+  // we will use to update our Mongo song eventually.
   // Remember, this conform to the Mongo schema we created, i.e.
   // const songSchema = { song_title: String, artist: String }
 
@@ -399,7 +403,6 @@ app.post('/update_song_post_route', function(request, response, next) {
   // And we find this song by using the Mongo Document's _id field.
   //
   // And we passed this data into our form using:
-  // 
   // <input type="hidden" name="id" value="{{ song._id }}">
 
   var mongoDocumentId = request.body.id
