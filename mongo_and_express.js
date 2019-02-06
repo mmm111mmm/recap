@@ -140,10 +140,6 @@ app.post('/add_song_post_route', function(request, response, next) {
     response.redirect('/');
   })
   .catch(function(error) {
-    // If there was an error adding our song,
-    // like if mongodb has been shut down,
-    // Then the 'catch' part of our Promise
-    // will be called.
     console.log("error adding song", error)
     // We're just going to render an error page.
     // In a bigger app we'd tell the user what the 
@@ -152,9 +148,7 @@ app.post('/add_song_post_route', function(request, response, next) {
   }); // end of the Promise
 
   // Note: the response.render()s are only inside
-  // the Promise, since we want to wait for the Promise,
-  // and therefore Mongo, to complete before 
-  // talking to the client (i.e. user)
+  // the Promise, since we want to wait for Mongo to finish.
 
 })
 
@@ -229,11 +223,7 @@ app.get('/', function(request, response, next) {
     // (We'll deal with updating and deleting below)
     response.render('list_songs', oursongs);
   })
-  .catch(function(error) {
-    // If there was an error adding our song,
-    // like if mongodb has been shut down,
-    // Then the 'catch' part of our Promise
-    // will be called.    
+  .catch(function(error) { 
     console.log("Error listing", error)
     // We're just going to render an error page.
     // In a bigger app we'd tell the user what the 
@@ -242,9 +232,7 @@ app.get('/', function(request, response, next) {
   }); // end of the Promise
 
   // Note: the response.render()s are only inside
-  // the Promise, since we want to wait for the Promise,
-  // and therefore Mongo, to complete before 
-  // talking to the client (i.e. user)  
+  // the Promise, since we want to wait for Mongo to finish.
 
 })
 
@@ -323,8 +311,7 @@ app.get('/update/:id', function(request, response, next) {
       song: songFromMongo 
     }
 
-    // And we'll send it to our update_song.hbs
-    // file.
+    // And we'll send it to our update_song.hbs file.
     response.render("update_song", oursong)
 
     // In the update_song.hbs file, we'll fill in our HTML
@@ -350,11 +337,7 @@ app.get('/update/:id', function(request, response, next) {
     // which we will define next.
 
   })
-  .catch(function(error) {
-    // If there was an error finding our song,
-    // like if mongodb has been shut down,
-    // Then the 'catch' part of our Promise
-    // will be called.    
+  .catch(function(error) {  
     console.log("Error finding the song", error)
     // We're just going to render an error page.
     // In a bigger app we'd tell the user what the 
@@ -363,9 +346,7 @@ app.get('/update/:id', function(request, response, next) {
   });  // end of the Promise
 
   // Note: the response.render()s are only inside
-  // the Promise, since we want to wait for the Promise,
-  // and therefore Mongo, to complete before 
-  // talking to the client (i.e. user)  
+  // the Promise, since we want to wait for Mongo to finish.
 
 })
 
@@ -419,18 +400,12 @@ app.post('/update_song_post_route', function(request, response, next) {
 
   Song.updateOne(mongoFilter, updatedSong)
   .then(function(success) {
-    // If we get into this Promise's .then()
-    // it means it's successfully updated our song.
     console.log("Updated our post, apparently", success)
     // Let's simply redirect to the / route, so
     // we list all our songs again.
     response.redirect('/');
   })
   .catch(function() {
-    // If there was an error updating our song,
-    // like if mongodb has been shut down,
-    // Then the 'catch' part of our Promise
-    // will be called.    
     console.log("Error updating the song", error)
     // We're just going to render an error page.
     // In a bigger app we'd tell the user what the 
@@ -439,9 +414,7 @@ app.post('/update_song_post_route', function(request, response, next) {
   });  // end of the Promise
 
   // Note: the response.render()s are only inside
-  // the Promise, since we want to wait for the Promise,
-  // and therefore Mongo, to complete before 
-  // talking to the client (i.e. user)    
+  // the Promise, since we want to wait for Mongo to finish.
 
 })
 
@@ -493,18 +466,12 @@ app.get('/delete/:id', function(request, response, next) {
 
   Song.deleteOne(mongoFilter)
   .then(function(success) {
-    // If the .then() part of the Promise is called
-    // it means Mongo's delete has been successful.
     console.log("Apparently we deleted something", success)
     // We'll just redirect user to the / route
     // so he or she sees the list of songs again
     response.redirect("/")
   })
   .catch(function(error) {
-    // If there was an error deleting our song,
-    // like if mongodb has been shut down,
-    // Then the 'catch' part of our Promise
-    // will be called.    
     console.log("Error deleting the song", error)
     // We're just going to render an error page.
     // In a bigger app we'd tell the user what the 
@@ -513,9 +480,8 @@ app.get('/delete/:id', function(request, response, next) {
   });  // end of the Promise
 
   // Note: the response.render()s are only inside
-  // the Promise, since we want to wait for the Promise,
-  // and therefore Mongo, to complete before 
-  // talking to the client (i.e. user)   
+  // the Promise, since we want to wait for Mongo to finish.
+
 
 })
 
