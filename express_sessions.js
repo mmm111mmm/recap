@@ -41,25 +41,31 @@ mongoose.connect('mongodb://localhost/my_recap_database', {useNewUrlParser: true
 
 var mongoStore = new MongoStore({ 
   mongooseConnection: mongoose.connection,
-  ttl: 24 * 60 * 60 // Delete this session in one day
+  ttl: 24 * 60 * 60 // Mongo deletes this session in one day
 })
 
 // Let's now use ExpressJS session.
-// And we use our MongoStore to save
-// our session.
 //
 // This allows us to save things on
 // the request.session object in the
 // routes.
+//
+// And we use our MongoStore object to save
+// our session.
+//
+// We tell the browser to delete the cookie after 60000 seconds
+//
+// The 'secret' is a arbitrary string that 
+// helps keep the session key random.
 
 app.use(session({
   secret: "basic-auth-secret",
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 60000 }, 
   store: mongoStore
 }))
 
-//
 // Start ExpressJS
+
 app.listen(3000, function() {
   console.log('My app listening on port 3000!')
 })
@@ -85,7 +91,6 @@ app.get('/', function(request, response, next) {
   `)
 });
 
-
 // #####################
 // # Here's the route that allows
 // # you to modify the user session
@@ -95,7 +100,6 @@ app.get("/add_to_basket", function(request, response, next) {
   request.session.currentUser.oranges++;
   response.redirect("/");
 });
-
 
 // #####################
 // # Here's the route that destroys

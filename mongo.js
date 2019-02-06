@@ -16,66 +16,6 @@
 // We normally use Mongo from within an express route. But we don't have to.
 //
 // In this file, we'll be using Mongo and Mongoose without expressjs.
-//
-// #########
-// #
-// # The section deals with using Mongo without Mongoose and with Javascript Promises
-// #
-// #########
-
-// We previously learn about connecting to Mongo with Promises.
-// If this is new to you, read the promises.js file in this repository.
-
-// We're going to write some javascript that adds a song to our new Mongo collection.
-
-var Mongo = require("mongodb")
-var MongoClient = Mongo.MongoClient
-var url = "mongodb://localhost:27017/";
-
-MongoClient.connect(url, { useNewUrlParser: true })
-.then(function(mongo) {
-  //console.log("Hooray we've connected to the database")
-  return mongo.db("my_recap_database").collection("my_recap_songs")
-})
-.then(function(collection) {
-  //console.log("Hooray we've connected to the collection")
-  var song_data = {
-    "song_title" : "Gimme Shelter",
-    "artist" : "The Rolling Stones"	
-  }
-  // We're going to return two promises.
-  // One to add the data, and the next to find
-  // all the data after the add
-  
-  // We have to say "toArray" in our find Promise, so it gives us an array.
-  // (When we use Mongoose we won't have to do this)
-
-  return Promise.all([
-    collection.insertOne(song_data),
-    collection.find().toArray()
-  ])
-})
-.then(function(insertAndFindResult) {
-  //console.log("We got the results", insertAndFindResult[1])
-  // We could print out insertAndFindResult[1] to see them all
-})
-.catch(function(results) {
-   console.log("Some kind of monogo error", results)
-})
-
-// You can see we're adding something to Mongo. 
-// To be precise, we're adding:
-/*
-{
-  "song_title" : "Gimme Shelter",
-  "artist" : "The Rolling Stones"	
-}
-*/
-
-// This works well, and it's pure Mongo.
-//
-// But we're going to use something called Mongoose
-
 
 
 // #########
@@ -86,8 +26,12 @@ MongoClient.connect(url, { useNewUrlParser: true })
 // #
 // #########
 
+// In the promises.js file we learnt how to use Mongo in
+// the standard and normal way.
+
 // There is another way to add, delete, update and fetch data from Mongo.
-// And this is called Mongoose. It has many features.
+// And this is called Mongoose. It has many features that makes
+// working with Mongo nicer.
 //
 // But for the moment we'll just focus on connecting to our 
 // database and collection adding documents to that collection.
