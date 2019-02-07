@@ -91,7 +91,7 @@ const MongoStore   = ConnectMongo(session);
 
 mongoose.connect('mongodb://localhost/my_recap_database', {useNewUrlParser: true})
 
-// Let's use Mongo to store our session.
+// Let's use Mongo to store our session javascript object.
 // We'll create a 'MongoStore' which EspressJS
 // will use below.
 
@@ -99,7 +99,7 @@ mongoose.connect('mongodb://localhost/my_recap_database', {useNewUrlParser: true
 // we started above.
 //
 // And we give it a Time To Life, which means
-// how long this should live before it's 
+// how long this should live before it's
 // destroyed.
 //
 // We don't want to keep around millions of 

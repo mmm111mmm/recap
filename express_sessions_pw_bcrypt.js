@@ -1,3 +1,4 @@
+// WORK IN PROGRESS
 
 // #####################
 // # Setup Mongo, Mongoose, Sessions and Express
@@ -110,17 +111,20 @@ app.post("/login_post", function(request, response, next) {
         Couldn't find that user.
       `)
     } else {
-
       var goodPassword = bcrypt.compareSync(request.body.username, userFromMongo.password)
 
-      console.log("Good pass?", goodPassword)
-
-      request.session.currentUser = userFromMongo
-      response.redirect("/")        
+      if(goodPassword) {
+        response.send(`
+          Your password was incorrect.
+        `)
+      } else {
+        request.session.currentUser = userFromMongo
+        response.redirect("/")          
+      }
     }
   })
-  .catch(function() {
-    console.log("Not found this user")
+  .catch(function(error) {
+    console.log("Not found this user", error)
     response.send(`
       Error finding that user.
     `)
