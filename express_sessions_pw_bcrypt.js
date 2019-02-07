@@ -5,6 +5,8 @@
 // We've learnt about using Sessions
 // We're now going to create a website where
 // you can register, login and logout.
+// And the Session will remember you're logged in.
+//
 // And there'se a 'secret' page you can only
 // go to once you're logged in.
 
@@ -99,11 +101,8 @@ app.get("/register", function(request, response, next) {
   `);
 });
 
-
-// #####################
-// # When the user submits the register form
-// # then they'll go here
-// #####################
+// Here's where we go to when the 
+// user presses submit
 
 app.post("/register_post", function(request, response, next) {
 
@@ -159,11 +158,8 @@ app.get("/login", function(request, response, next) {
   `);
 });
 
-
-// #####################
-// # Here's where we go to when the 
-// # user has pressed submit on the login form.
-// #####################
+// Here's where we go to when the 
+// user presses submit
 
 app.post("/login_post", function(request, response, next) {
 
@@ -255,6 +251,9 @@ app.get('/', function(request, response, next) {
 // # i.e. if you have request.session.currentUser
 // #####################
 
+// Note .use
+// And note we're only applying this middleware
+// to /secret
 app.use("/secret", function(request, response, next) {
   if(request.session.currentUser) {
     // if we do have the currentUser object, go
@@ -268,12 +267,10 @@ app.use("/secret", function(request, response, next) {
 })
 
 
-// #####################
-// # Because of the above middleware
-// # We will only go to this page if the
-// # user is logged in - i.e. there is a
-// # request.session.currentUser object
-// #####################
+// Because of the above middleware
+// We will only go to this page if the
+// user is logged in - i.e. there is a
+// request.session.currentUser object
 
 app.get("/secret", function(request, response, next) {
   response.send(`
