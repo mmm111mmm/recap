@@ -55,7 +55,6 @@
 
 
 // #####################
-// # 
 // # Let's make a simple app with Sessions.
 // #
 // # * When the user goes to the Login page, they will
@@ -63,13 +62,14 @@
 // #
 // # * We will then remember their username in our session.
 // # 
-// # * Then when they go to the main page, we'll display that
-// #   username 
+// # * When they go to the main page, we'll display that username 
 // #
 // # * Even if they close the browser and open it again their
 // #   session will still be there - we'll still remmeber them.
 // #####################
 
+// You can run this by 'npm install express express-session mongoose connect-mongo'
+// Then 'node express_sessions.js'
 
 // #####################
 // # Setup Mongo, Mongoose, Sessions and Express

@@ -13,12 +13,12 @@
 // And we will encrypt the passwords using Bcrypt.
 
 // IMPORTANT: This file assumes you've understood
-// - express_handlebars.js
-// - promises.js
-// - mongo.js
-// - mongo_and_express.js
-// - express_sessions.js
-// In that order
+// 0. express_handlebars.js 1. promises.js
+// 2. mongo.js 3. mongo_and_express.js
+// 4. express_sessions.js
+
+// Run this by 'npm npm install express express-session mongoose connect-mongo bcrypt'
+// And 'node express_sessions_pw_bcrypt.js'
 
 // IMPORTANT: We're not dealing with errors in this file
 // For example, if two users try to register with
