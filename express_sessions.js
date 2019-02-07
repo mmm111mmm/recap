@@ -130,7 +130,9 @@ var mongoStore = new MongoStore({
 app.use(session({
   secret: "some random stuff - put anything here",
   cookie: { maxAge: 60000 }, 
-  store: mongoStore
+  store: mongoStore,
+  resave: true, // save the session even if it's not been modified
+  saveUninitialized: true // save the session before it's been modified
 }))
 
 app.use(bodyParser.urlencoded({ extended: true }));
