@@ -66,7 +66,7 @@ var mongoStore = new MongoStore({
 
 app.use(session({
   secret: "some random stuff - put anything here",
-  cookie: { maxAge: 60000 }, 
+  cookie: { maxAge: 6000000 }, 
   store: mongoStore,
   resave: true,
   saveUninitialized: true 
