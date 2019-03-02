@@ -2,12 +2,11 @@
 
 * Arthithmatic, parens
 
-* boolean, !, &&, >, <, <=, >=
+* boolean, !, <, <=, >=
 
 * ?:
 
-
-* While, for, continue, break
+* While, continue, break
 
 Arrays
 ======
@@ -88,6 +87,11 @@ Can:
 
 Example 2
 =========
+
+* &&, >
+*
+* 
+* 
 
 ```
 function yourFavouriteHouse(charactersArray) {
