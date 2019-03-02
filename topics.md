@@ -6,7 +6,7 @@
 
 * ?:
 
-* While, continue, break
+* continue, break
 
 Arrays
 ======
