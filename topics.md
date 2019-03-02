@@ -81,6 +81,7 @@ Can:
 * Return a value from a function
 * Call a function, with an argument
 * Make an if, else if and else statement
+* Create a conditional with a OR
 * Compare strings
 * Undercase a string
 * Concatendate a string
