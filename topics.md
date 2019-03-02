@@ -90,6 +90,27 @@ Example 2
 * array
 * array index syntax
 * ++
+* for
+* while
+
+```
+  ...
+  var i = 0;
+  while(i < charactersArray.length) {
+    var character = charactersArray[i];
+    if(character == "john snow" || character == "bran" ) {
+      stark++;
+    } else if(character == "cersi" || character == "tyron") {
+      lannister++;
+    } else if(character == "dynaeres") {
+      tygerion++;
+    } else {
+      console.log("I don't know that character!")
+    }
+    i++;
+  }
+  ...
+```
 
 ```
 function yourFavouriteHouse(charactersArray) {
