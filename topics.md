@@ -11,8 +11,6 @@
 Arrays
 ======
 
-* Arrays
-
 * Split, Sort, Reverse
 
 * Slice, Splice
@@ -89,9 +87,9 @@ Example 2
 =========
 
 * &&, >
-*
-* 
-* 
+* array
+* array index syntax
+* ++
 
 ```
 function yourFavouriteHouse(charactersArray) {
