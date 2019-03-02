@@ -76,6 +76,7 @@ console.log("Your favourite character is from: " + fromHouse)
 
 Can:
 
+* Define and assign a variable
 * Make a function with a parameter
 * Return a value from a function
 * Call a function, with an argument
