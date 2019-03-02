@@ -32,6 +32,8 @@ Objects
 Misc 
 ====
 
+* Try catch
+
 * OO with ES6
 
 * Callbacks
