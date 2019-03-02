@@ -48,11 +48,6 @@ Teaching
 Example 1
 =========
 
-* var
-* string
-* if, ifelse, else, ||
-* function
-
 ```
 function gotHouse(favouriteCharacter) {
   favouriteCharacter = favouriteCharacter.toLowerCase();
@@ -85,13 +80,6 @@ Can:
 
 Example 2
 =========
-
-* &&, >
-* array
-* array index syntax
-* ++
-* for
-* while
 
 ```
   ...
@@ -148,8 +136,9 @@ console.log("Your favourite house is: " + favouriteHouse)
 Can:
 
 * Define an array
-* Use a for loop
 * Access an element of an array by index
+* Use a for loop
+* Use a while loop
 * Create a conditional with `>`
 * Create a conditional with `&&`
 * Use the `++` syntax
