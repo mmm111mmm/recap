@@ -6,19 +6,31 @@
 
 * While, for
 
+Arrays
+======
+
 * Arrays
 
 * Split, Sort, Reverse
 
 * Slice, Splice
 
-* Objects
+Functional functions
+====================
 
 * forEach
 
 * Map, Filter
 
 * Reduce
+
+Objects
+=======
+
+* Objects
+
+Misc 
+====
 
 * OO with ES6
 
@@ -29,6 +41,9 @@
 * Closures, scope
 
 * ES6
+
+Teaching
+========
 
 Example 1
 =========
