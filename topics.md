@@ -2,7 +2,7 @@
 
 * Arthithmatic, parens
 
-* boolean, !, &&
+* boolean, !, &&, >, <, <=, >=
 
 * ?:
 
