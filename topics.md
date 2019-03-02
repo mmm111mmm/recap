@@ -1,6 +1,6 @@
-* includes, repeat, indexof, accessing characters
+* includes, repeat, accessing characters
 
-* Arthithmatic, parens
+* +, -, --, %, /, *, **
 
 * boolean, !, <, <=, >=
 
@@ -11,7 +11,7 @@
 Arrays
 ======
 
-* Split, Sort, Reverse
+* Split, Sort, Reverse, indexof
 
 * Slice, Splice
 
