@@ -1,8 +1,10 @@
-* ||
+* &&
 
 * Arthithmatic, parens
 
 * ?:
+
+* boolean, !
 
 * While, for, continue, break
 
@@ -50,22 +52,23 @@ Example 1
 
 * var
 * string
-* boolean, !
-* if, ifelse, else, &&
+* if, ifelse, else, ||
 * function
 
 ```
-function greet(name, informal) {
-  name = name.toLowerCase()
-  if(name == "aaron" && informal) {
-    console.log("Hiya, teacher.")
-  } else if(name == "aaron" && !informal) {
-    console.log("Good morning, teacher.")    
+function gotHouse(favouriteCharacter) {
+  favouriteCharacter = favouriteCharacter.toLowerCase()
+  if(favouriteCharacter == "john snow" || favouriteCharacter == "bran" ) {
+    return "House Stark"
+  } else if(favouriteCharacter == "cersi" || favouriteCharacter == "tyron") {
+    return "House Lannister"
+  } else if(favouriteCharacter == "dynaeres") {
+    return "House Tygereon"
   } else {
-    console.log("Hello, unknown stranger.")
+    return "No idea, sunshine!"
   }
 }
 
-var firstName = "Aaron"
-greet(firstName, true)
+var fromHouse = gotHouse("Tyron")
+console.log("Your favourite character is from: " + fromHouse)
 ```
