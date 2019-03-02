@@ -1,10 +1,11 @@
-* &&
+* includes, repeat, indexof, accessing characters
 
 * Arthithmatic, parens
 
+* boolean, !, &&
+
 * ?:
 
-* boolean, !
 
 * While, for, continue, break
 
@@ -72,3 +73,15 @@ function gotHouse(favouriteCharacter) {
 var fromHouse = gotHouse("Tyron")
 console.log("Your favourite character is from: " + fromHouse)
 ```
+
+Can:
+
+* Make a function with a parameter
+* Return a value from a function
+* Call a function, with an argument
+* Make an if, else if and else statement
+* Compare strings
+* Undercase a string
+* Concatendate a string
+
+
