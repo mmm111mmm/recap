@@ -1,4 +1,4 @@
-* booleans (value), &&, ||
+* ||
 
 * Arthithmatic, parens
 
@@ -30,6 +30,8 @@
 
 * ES6
 
+Example 1
+=========
 
 * var
 * string
