@@ -1,12 +1,10 @@
-* Vars, Booleans
+* booleans (value), &&, ||
 
-* Arthithmatic, parens, strings
+* Arthithmatic, parens
 
-* Conditionals
+* ?:
 
 * While, for
-
-* Functions
 
 * Arrays
 
@@ -31,3 +29,29 @@
 * Closures, scope
 
 * ES6
+
+
+* var
+* string
+* boolean, !
+* if, ifelse, else, &&
+* function
+
+```
+function greet(name, informal) {
+  if(name == "Aaron" && informal) {
+    console.log("Hiya, teacher.")
+  else if(name == "Aaron" && !informal) {
+    console.log("Good morning, teacher.")    
+  } else if(name == "Thor" && informal) {
+    console.log("Hiya, TA")
+  } else if(name == "Thor" && !informal) {
+    console.log("Good morning, TA")
+  } else {
+    console.log("Hello, unknown stranger.")
+  }
+}
+
+var firstName = "Aaron"
+greet(firstName, true)
+```
