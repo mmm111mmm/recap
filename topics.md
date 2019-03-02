@@ -43,7 +43,7 @@ Example 1
 function greet(name, informal) {
   if(name == "Aaron" && informal) {
     console.log("Hiya, teacher.")
-  else if(name == "Aaron" && !informal) {
+  } else if(name == "Aaron" && !informal) {
     console.log("Good morning, teacher.")    
   } else if(name == "Thor" && informal) {
     console.log("Hiya, TA")
