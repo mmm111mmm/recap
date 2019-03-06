@@ -18,6 +18,14 @@ Module one
 * bind, apply, call
 * hoisting, closures, let
 
+Module one canvas
+==========
+
+* draw link, text, rectangle, image
+* onDraw, onUpdateAnimationFrame
+* onKeyDown, draw multiple images on movement
+* background image
+
 Other
 =====
 
