@@ -1,3 +1,26 @@
+Can do
+======
+
+Module one
+==========
+
+* Define a variable - string, number, bool, +
+* Can make a function with params, pass in arguments, return, anonymous function, scope
+* Arithmatic, ++, %
+* if, else if, else, ?:, &&, ||, ==, >, <, <=. >=
+* String functions
+* Array and for loop over it, access an element, continue, break
+* Slice, split, sort, reverse, indexof
+* map, filter, foreach, reduce
+* Define an object, access, add, Object.keys
+* ES6 classes, inherit
+* Callbacks, timeout, interval
+* bind, apply, call
+* hoisting, closures, let
+
+Other
+=====
+
 * includes, repeat, accessing characters
 
 * +, -, --, %, /, *, **
