@@ -188,7 +188,7 @@ app.post("/login_post", function(request, response, next) {
       // from the HTML form is the same as the password
       // we encryped in the database.
       var goodPassword = bcrypt.compareSync(
-        request.body.username, 
+        request.body.password, 
         userFromMongo.password
       )
 
