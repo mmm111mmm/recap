@@ -1,0 +1,48 @@
+<html>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <style>
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0px;
+    }
+    .behind, .front {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    #page2 {
+      top: 100%;
+      left: 0px;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: orange;
+    }
+    #page1 {
+      top: 0px;
+      left: 0px;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: yellow;
+    }
+    .centre-font-style {
+      font-size: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  </style>
+  <body>
+    <div style="position: relative; height: 100%; width: 100%;">
+        <a href="#page2" id="page1" class="centre-font-style">Page 1 (click me)</a>
+        <a href="#page1" id="page2" class="centre-font-style">Page 2 (click me)</a>
+    </div>
+  </body>
+</html>
