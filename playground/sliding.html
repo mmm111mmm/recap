@@ -15,26 +15,26 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: 0.7s ease-in-out; 
+    }
+    .pages {
+        transition: 0.7s ease-in-out; 
     }
     .page {
       height: 100%;
-      transition: 0.7s ease-in-out; 
       background-size: cover;     
       color: white;
     }
     #page1 {
       height: 100%;
-      background-color: yellow;
       background-image: url(https://raw.githubusercontent.com/alvarotrigo/fullPage.js/master/examples/imgs/bg2.jpg)
     }
     #page2 {
       height: 100%;
-      background-color: orange;
       background-image: url(https://raw.githubusercontent.com/alvarotrigo/fullPage.js/master/examples/imgs/bg3.jpg)
     }
     #page3 {
       height: 100%;
-      background-color: greenyellow;
       background-image: url(https://raw.githubusercontent.com/alvarotrigo/fullPage.js/master/examples/imgs/bg4.jpg);
     }
     #page4 {
@@ -52,9 +52,11 @@
   </body>
   <script>
     window.page = 1
-    var pages = [...document.querySelectorAll(".page")]
+    var pagesDoc = document.querySelector(".pages")
+    var height = pagesDoc.offsetHeight
+    var pageHeight = height / 4
 
-    pages[0].addEventListener("transitionend", function() {
+    pagesDoc.addEventListener("transitionend", function() {
         if(this.scrolling == "up") this.page--
         else if(this.scrolling == "down") this.page++
         this.scrolling = undefined
@@ -73,7 +75,6 @@
         })    
     })
 
-
     window.addEventListener("wheel", function(event){
         scrollPage(event.deltaY)
     })
@@ -81,14 +82,11 @@
     function scrollPage(deltaY) {
         if(deltaY > 0 && !this.scrolling && this.page < pages.length) {
             this.scrolling = "down"
-            pages.forEach(p => {
-                p.style.transform = `translate(0em, -${this.page * 100}%)`
-            })
+            console.log("down", this.page)
+            pagesDoc.style.transform = `translate(0em, -${this.page * pageHeight}px)`
         } else if(deltaY < 0 && !this.scrolling && this.page > 1) {
             this.scrolling = "up"
-            pages.forEach(p => {
-                p.style.transform = `translate(0em, -${(this.page-2) * 100}%)`
-            })
+            pagesDoc.style.transform = `translate(0em, -${(this.page-2) * pageHeight}px)`           
         }
     }
 
